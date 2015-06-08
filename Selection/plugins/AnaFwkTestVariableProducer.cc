@@ -10,6 +10,7 @@ void
 AnaFwkTestVariableProducer::AddVariables (const edm::Event &event) {
 
   // Add all of the needed collections to objectsToGet_
+  objectsToGet_.insert ("mets");
   objectsToGet_.insert ("muons");
   objectsToGet_.insert ("basicjets");
 
@@ -22,6 +23,11 @@ AnaFwkTestVariableProducer::AddVariables (const edm::Event &event) {
   for (const auto &muon1 : *handles_.muons) {
     double value = anatools::getMember(muon1, "pt");
     addUserVar("muonPt", value, muon1);
+  }
+
+  for (const auto &met1 : *handles_.mets) {  // there should be only 1 Met, so loop isn't necessary  
+    double value = anatools::getMember(met1, "pt");
+    addUserVar("metPt", value, met1);
   }
 
   // calculate relative pt difference

@@ -11,7 +11,7 @@ process = cms.Process ('OSUAnalysis')
 
 # how often to print a log message
 process.load ('FWCore.MessageService.MessageLogger_cfi')
-process.MessageLogger.cerr.FwkReport.reportEvery = 10
+process.MessageLogger.cerr.FwkReport.reportEvery = 100
 
 # input source when running interactively
 # ---------------------------------------
@@ -74,7 +74,7 @@ collections = cms.PSet (
 ################################################################################
 
 variableProducers = []
-variableProducers.append("MyVariableProducer")
+variableProducers.append("AnaFwkTestVariableProducer")
 
 ################################################################################
 ##### Import the channels to be run ############################################
@@ -94,7 +94,8 @@ from OSUT3Analysis.Configuration.histogramDefinitions import *
 ################################################################################
 
 #add_channels (process, [eMuMinimal], cms.VPSet (histograms), collections, variableProducers, False)
-add_channels (process, [channelWZ], cms.VPSet (histograms, MyElectronHistograms, MyBasicJetHistograms, MyMetHistograms, BasicjetBasicjetHistograms), collections, variableProducers, False)
+add_channels (process, [channelWZ], cms.VPSet (histograms, MyElectronHistograms, MyBasicJetHistograms, MyMetHistograms, BasicjetBasicjetHistograms, MyUserVarHistograms), collections, variableProducers, False)
+#add_channels (process, [channelWZ], cms.VPSet (histograms, MyElectronHistograms, MyBasicJetHistograms, MyMetHistograms, BasicjetBasicjetHistograms), collections, variableProducers, True)
 
 # uncomment to produce a full python configuration log file
 #outfile = open('dumpedConfig.py','w'); print >> outfile,process.dumpPython(); outfile.close()

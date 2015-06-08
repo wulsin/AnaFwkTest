@@ -302,6 +302,31 @@ MyBasicJetHistograms = cms.PSet(
 )
 
 
+MyUserVarHistograms = cms.PSet(
+    inputCollection = cms.vstring("uservariables"),
+    histograms = cms.VPSet (
+        # cms.PSet (
+        #     name = cms.string("basicjetRelPtDiff"),
+        #     title = cms.string("Relative p_{T} difference of leading jets; (p_{T1} - p_{T2}) / (p_{T1} + p_{T2})"),
+        #     binsX = cms.untracked.vdouble(100, -1, 1),
+        #     inputVariables = cms.vstring("basicjetRelPtDiff"),
+        # ),
+        cms.PSet (
+            name = cms.string("muonPt"),
+            title = cms.string("Muon pt; muon p_{T}"), 
+            binsX = cms.untracked.vdouble(100, 0, 500),
+            inputVariables = cms.vstring("muonPt"),
+        ),
+        cms.PSet (
+            name = cms.string("userVarMetPt"),
+            title = cms.string("Met pt; MET"), 
+            binsX = cms.untracked.vdouble(100, 0, 500),
+            inputVariables = cms.vstring("metPt"),
+        ),
+    )
+)
+
+
 MyProtoHistograms = cms.PSet(
     # using "events" tells the code to pass the full event
     # to the special module to calculate the final quantity
