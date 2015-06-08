@@ -11,7 +11,7 @@ process = cms.Process ('OSUAnalysis')
 
 # how often to print a log message
 process.load ('FWCore.MessageService.MessageLogger_cfi')
-process.MessageLogger.cerr.FwkReport.reportEvery = 100
+process.MessageLogger.cerr.FwkReport.reportEvery = 10
 
 # input source when running interactively
 # ---------------------------------------
@@ -51,7 +51,10 @@ collections = cms.PSet (
     electrons       =  cms.InputTag  ('gsfElectrons', ''),
     events          =  cms.InputTag  (''),
     genjets         =  cms.InputTag  (''),
-    jets            =  cms.InputTag  ('ak5PFJets'),
+#    jets            =  cms.InputTag  ('ak5PFJets'),
+    jets            =  cms.InputTag  ('caSubjetFilterPFJets', ""),
+#    basicjets       =  cms.InputTag  ('caSubjetFilterPFJets', "fat"),
+    basicjets       =  cms.InputTag  ('leadingFat', "leadingFat"),
     mcparticles     =  cms.InputTag  (''),
     mets            =  cms.InputTag  ('pfMet', ''),
     muons           =  cms.InputTag  ('muons'),
@@ -91,7 +94,7 @@ from OSUT3Analysis.Configuration.histogramDefinitions import *
 ################################################################################
 
 #add_channels (process, [eMuMinimal], cms.VPSet (histograms), collections, variableProducers, False)
-add_channels (process, [channelWZ], cms.VPSet (histograms, MyElectronHistograms, MyJetHistograms, MyMetHistograms, JetJetHistograms), collections, variableProducers, False)
+add_channels (process, [channelWZ], cms.VPSet (histograms, MyElectronHistograms, MyBasicJetHistograms, MyMetHistograms, BasicjetBasicjetHistograms), collections, variableProducers, False)
 
 # uncomment to produce a full python configuration log file
 #outfile = open('dumpedConfig.py','w'); print >> outfile,process.dumpPython(); outfile.close()

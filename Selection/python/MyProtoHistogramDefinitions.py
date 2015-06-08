@@ -57,54 +57,60 @@ MyElectronHistograms = cms.PSet(
             binsX = cms.untracked.vdouble(100, -3, 3),
             inputVariables = cms.vstring("eta"),
         ),
-        cms.PSet (
-            name = cms.string("electronId"),
-            title = cms.string("Electron ID; electron ID"),
-            binsX = cms.untracked.vdouble(4, -1.5, 2.5),
-            inputVariables = cms.vstring(electronID),
-        ),
+        # cms.PSet (
+        #     name = cms.string("electronId"),
+        #     title = cms.string("Electron ID; electron ID"),
+        #     binsX = cms.untracked.vdouble(4, -1.5, 2.5),
+        #     inputVariables = cms.vstring(electronID),
+        # ),
     )
 )
 
 
-JetJetHistograms = cms.PSet(
-    inputCollection = cms.vstring("jets", "jets"),
+BasicjetBasicjetHistograms = cms.PSet(
+    inputCollection = cms.vstring("basicjets", "basicjets"),
     histograms = cms.VPSet (
         cms.PSet (
-            name = cms.string("jetjetDeltaR"),
+            name = cms.string("basicjetbasicjetDeltaR"),
             title = cms.string("DeltaR between 2 jets"),
             binsX = cms.untracked.vdouble(100, 0, 5),
-            inputVariables = cms.vstring("deltaR (jet, jet)"),
+            inputVariables = cms.vstring("deltaR (basicjet, basicjet)"),
         ),
         cms.PSet (
-            name = cms.string("jetjetRapidityDiff"),
-            title = cms.string("Invariant mass of 2 jets"),
+            name = cms.string("basicjetbasicjetRapidityDiff"),
+            title = cms.string("Eta difference of 2 basicjets;jet |y_{1} - y_{2}|"),
             binsX = cms.untracked.vdouble(100, 0, 5),
-            inputVariables = cms.vstring("fabs (jet.eta - jet.eta)"),
+            inputVariables = cms.vstring("fabs (basicjet.rapidity - basicjet.rapidity)"),
         ),
         cms.PSet (
-            name = cms.string("jetjetPtDiff"),
+            name = cms.string("basicjetbasicjetEtaDiff"),
+            title = cms.string("Eta difference of 2 basicjets;jet |#eta_{1} - #eta_{2}|"),
+            binsX = cms.untracked.vdouble(100, 0, 5),
+            inputVariables = cms.vstring("fabs (basicjet.eta - basicjet.eta)"),
+        ),
+        cms.PSet (
+            name = cms.string("basicjetbasicjetPtDiff"),
             title = cms.string("Relative difference in pt;(pT1 - pT2)"),
             binsX = cms.untracked.vdouble(100, -100, 100),
-            inputVariables = cms.vstring("jet.pt - jet.pt"),
+            inputVariables = cms.vstring("basicjet.pt - basicjet.pt"),
         ),
         cms.PSet (
-            name = cms.string("jetjetPtSum"),
+            name = cms.string("basicjetbasicjetPtSum"),
             title = cms.string("Sum of pt;(pT1 + pT2)"),
             binsX = cms.untracked.vdouble(100, 0, 1000),
-            inputVariables = cms.vstring("(jet.pt + jet.pt)"),
+            inputVariables = cms.vstring("(basicjet.pt + basicjet.pt)"),
         ),
         # cms.PSet (
-        #     name = cms.string("jetjetPtRelDiff"),
+        #     name = cms.string("basicjetbasicjetPtRelDiff"),
         #     title = cms.string("Relative difference in pt;(pT1 - pT2) / (pT1 + pT2)"),
         #     binsX = cms.untracked.vdouble(100, -1, 1),
-        #     inputVariables = cms.vstring("(jet.pt - jet.pt) / (jet.pt + jet.pt)"),
+        #     inputVariables = cms.vstring("(basicjet.pt - basicjet.pt) / (basicjet.pt + basicjet.pt)"),
         # ),
         cms.PSet (
-            name = cms.string("jetjetInvMass"),
-            title = cms.string("Invariant mass of 2 jets"),
+            name = cms.string("basicjetbasicjetInvMass"),
+            title = cms.string("Invariant mass of 2 basicjets"),
             binsX = cms.untracked.vdouble(350, 0, 3500),
-            inputVariables = cms.vstring("invMass (jet, jet)"),
+            inputVariables = cms.vstring("invMass (basicjet, basicjet)"),
         ),
     )
 )
@@ -226,6 +232,74 @@ MyJetHistograms = cms.PSet(
     )
 )
 
+
+
+MyBasicJetHistograms = cms.PSet(
+    inputCollection = cms.vstring("basicjets"),
+    histograms = cms.VPSet (
+        cms.PSet (
+            name = cms.string("jetNum"),
+            title = cms.string("Number of selected basicjets; Number of selected basicjets"),
+            binsX = cms.untracked.vdouble(10, -0.5, 9.5),
+            inputVariables = cms.vstring("number ( basicjet )"),
+        ),
+        cms.PSet (
+            name = cms.string("jetPt"),
+            title = cms.string("Jet Transverse Momentum; p_{T} [GeV]"),
+            binsX = cms.untracked.vdouble(100, 0, 500),
+            inputVariables = cms.vstring("pt"),
+        ),
+        cms.PSet (
+            name = cms.string("jetEta"),
+            title = cms.string("Jet Eta; #eta"),
+            binsX = cms.untracked.vdouble(100, -3, 3),
+            inputVariables = cms.vstring("eta"),
+        ),
+        cms.PSet (
+            name = cms.string("jetRapidity"),
+            title = cms.string("Jet Eta; jet y"),
+            binsX = cms.untracked.vdouble(100, -5, 5),
+            inputVariables = cms.vstring("rapidity"),
+        ),
+        cms.PSet (
+            name = cms.string("jetPhi"),
+            title = cms.string("Jet Phi; #phi"),
+            binsX = cms.untracked.vdouble(100, -3.15, 3.15),
+            inputVariables = cms.vstring("phi"),
+        ),
+        cms.PSet (
+            name = cms.string("jetMass"),
+            title = cms.string("Jet mass; m_{j} [GeV]"),
+            binsX = cms.untracked.vdouble(100, 0, 500),
+            inputVariables = cms.vstring("mass"),
+        ),
+        cms.PSet (
+            name = cms.string("jetMassDiffW"),
+            title = cms.string("Jet mass difference from W; m_{j} - m_{W}"),
+            binsX = cms.untracked.vdouble(100, -100, 100),
+            inputVariables = cms.vstring("mass - " + str(massW)),
+        ),
+        cms.PSet (
+            name = cms.string("jetMassDiffZ"),
+            title = cms.string("Jet mass difference from Z; m_{j} - m_{Z}"),
+            binsX = cms.untracked.vdouble(100, -100, 100),
+            inputVariables = cms.vstring("mass - " + str(massZ)),
+        ),
+        cms.PSet (
+            name = cms.string("jetCharge"),
+            title = cms.string("Jet Charge; charge"),
+            binsX = cms.untracked.vdouble(3, -1.5, 1.5),
+            inputVariables = cms.vstring("charge"),
+        ),
+        cms.PSet (
+            name = cms.string("jetEtaPhi"),
+            title = cms.string("Jet Eta vs. Phi; #phi; #eta"),
+            binsX = cms.untracked.vdouble(100, -3.15, 3.15), 
+            binsY = cms.untracked.vdouble(100, -3, 3), 
+            inputVariables = cms.vstring("phi","eta"),
+        ),        
+    )
+)
 
 
 MyProtoHistograms = cms.PSet(
