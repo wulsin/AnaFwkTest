@@ -21,11 +21,11 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 100
 
 # sample direcotory
 # From /JetHT/Run2012D-22Jan2013-v1/AOD dataset:  
-set_input(process, "/mnt/hadoop/se/store/user/kkotov/BN_JetHT_Run2012D-22Jan2013-v1_AOD_0/")
+#set_input(process, "/mnt/hadoop/se/store/user/kkotov/BN_JetHT_Run2012D-22Jan2013-v1_AOD_0/")
 
 
 # sample ROOT file
-#set_input(process, "/store/user/ahart/BN_stopToBottom_M_800_10mm_Tune4C_8TeV_pythia8_lantonel-Summer12_DR53X-PU_S10_START53_V19-v1-ab45720b22c4f98257a2f100c39d504b_USER_1/stopToBottom_M_800_10mm_Tune4C_8TeV_pythia8_lantonel-Summer12_DR53X-PU_S10_START53_V19-v1-ab45720b22c4f98257a2f100c39d504b_USER_10_2_Dzw.root")
+set_input(process, "/home/hart/diboson/CMSSW_5_3_28_patch1/src/subjetFilter.root")  
 
 # sample dataset nickname
 #set_input(process, "DYToTauTau_20")
@@ -47,23 +47,23 @@ process.maxEvents = cms.untracked.PSet (
 
 # this PSet specifies which collections to get from the input files
 collections = cms.PSet (
-  bxlumis         =  cms.InputTag  ('BNproducer',  'BXlumi'),
-  electrons       =  cms.InputTag  ('BNproducer',  'selectedPatElectronsLoosePFlow'),
-  events          =  cms.InputTag  ('BNproducer',  ''),
-  genjets         =  cms.InputTag  ('BNproducer',  'ak5GenJets'),
-  jets            =  cms.InputTag  ('BNproducer',  'selectedPatJetsPFlow'),
-  mcparticles     =  cms.InputTag  ('BNproducer',  'MCstatus3'),
-  mets            =  cms.InputTag  ('BNproducer',  'patMETsPFlow'),
-  muons           =  cms.InputTag  ('BNproducer',  'selectedPatMuonsLoosePFlow'),
-  photons         =  cms.InputTag  ('BNproducer',  'none'),
-  primaryvertexs  =  cms.InputTag  ('BNproducer',  'offlinePrimaryVertices'),
-  secMuons        =  cms.InputTag  ('BNproducer',  'selectedPatMuonsLoosePFlow'),
-  stops           =  cms.InputTag  ('BNproducer',  'MCstop'),
-  superclusters   =  cms.InputTag  ('BNproducer',  'corHybridSCandMulti5x5WithPreshower'),
-  taus            =  cms.InputTag  ('BNproducer',  'selectedPatTaus'),
-  tracks          =  cms.InputTag  ('BNproducer',  'generalTracks'),
-  triggers        =  cms.InputTag  ('BNproducer',  'HLT'),
-  trigobjs        =  cms.InputTag  ('BNproducer',  'HLT'),
+    bxlumis         =  cms.InputTag  (''),
+    electrons       =  cms.InputTag  ('gsfElectrons', ''),
+    events          =  cms.InputTag  (''),
+    genjets         =  cms.InputTag  (''),
+    jets            =  cms.InputTag  ('ak5PFJets'),
+    mcparticles     =  cms.InputTag  (''),
+    mets            =  cms.InputTag  ('pfMet', ''),
+    muons           =  cms.InputTag  ('muons'),
+    photons         =  cms.InputTag  ('photons'),
+    primaryvertexs  =  cms.InputTag  ('offlinePrimaryVertices'),
+    secMuons        =  cms.InputTag  ('muonsFromCosmics'),
+    stops           =  cms.InputTag  (''),
+    superclusters   =  cms.InputTag  (''),
+    taus            =  cms.InputTag  ('hpsPFTauProducer'),
+    tracks          =  cms.InputTag  ('generalTracks'),
+    triggers        =  cms.InputTag  ('TriggerResults'),
+    trigobjs        =  cms.InputTag  (''),
 )
 
 ################################################################################
@@ -91,7 +91,7 @@ from OSUT3Analysis.Configuration.histogramDefinitions import *
 ################################################################################
 
 #add_channels (process, [eMuMinimal], cms.VPSet (histograms), collections, variableProducers, False)
-add_channels (process, [channelWZ], cms.VPSet (histograms, MyElectronHistograms, MyJetHistograms, MetHistograms, JetJetHistograms), collections, variableProducers, False)
+add_channels (process, [channelWZ], cms.VPSet (histograms, MyElectronHistograms, MyJetHistograms, MyMetHistograms, JetJetHistograms), collections, variableProducers, False)
 
 # uncomment to produce a full python configuration log file
 #outfile = open('dumpedConfig.py','w'); print >> outfile,process.dumpPython(); outfile.close()

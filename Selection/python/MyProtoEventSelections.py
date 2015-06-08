@@ -6,32 +6,24 @@ from AnaFwkTest.Selection.CommonUtils import *
 ##### WZ channel
 ##########################################################################
 
-electronID = "(pt > 7 && pt < 10                                  \
-&& ((abs (scEta) < 0.8 && mvaNonTrigV0 > 0.47)    \
-|| (abs (scEta) >= 0.8 && abs (scEta) < 1.479 && mvaNonTrigV0 > 0.004) \
-|| (abs (scEta) >= 1.479 && abs (scEta) < 2.5 && mvaNonTrigV0 > 0.295))) \
-|| (pt >= 10                                           \
-&& ((abs (scEta) < 0.8 && mvaNonTrigV0 > -0.34)   \
-|| (abs (scEta) >= 0.8 && abs (scEta) < 1.479 && mvaNonTrigV0 > -0.65) \
-|| (abs (scEta) >= 1.479 && abs (scEta) < 2.5 && mvaNonTrigV0 > 0.60)))  \
-"
  
 channelWZ = cms.PSet(
     name = cms.string("channelWZ"),
-    triggers = cms.vstring("HLT_PFJet320_v"), # TRIGGER
+    triggers = cms.vstring(""),  # FIXME:  Add trigger!  
+#    triggers = cms.vstring("HLT_PFJet320_v"), # TRIGGER   
     cuts = cms.VPSet (
-        # EVENT CLEANING
-        cms.PSet (
-            inputCollection = cms.vstring("events"),
-            cutString = cms.string("FilterOutScraping > 0"),
-            numberRequired = cms.string(">= 1")
-        ),
-        # EVENT HAS GOOD PV
-        cms.PSet (
-            inputCollection = cms.vstring("primaryvertexs"),
-            cutString = cms.string("isGood > 0"),
-            numberRequired = cms.string(">= 1")
-        ),
+        # # EVENT CLEANING
+        # cms.PSet (
+        #     inputCollection = cms.vstring("events"),
+        #     cutString = cms.string("FilterOutScraping > 0"),
+        #     numberRequired = cms.string(">= 1")
+        # ),
+        # # EVENT HAS GOOD PV
+        # cms.PSet (
+        #     inputCollection = cms.vstring("primaryvertexs"),
+        #     cutString = cms.string("isGood > 0"),
+        #     numberRequired = cms.string(">= 1")
+        # ),
         # MET CUT
         cms.PSet (
             inputCollection = cms.vstring("mets"),
@@ -49,7 +41,8 @@ channelWZ = cms.PSet(
         # ELECTRON VETO
         cms.PSet (
             inputCollection = cms.vstring("electrons"),
-            cutString = cms.string("pt > 20 && isEBEEGap = 0 && " + electronID),
+#            cutString = cms.string("pt > 20 && isEBEEGap = 0 && " + electronID),
+            cutString = cms.string("pt > 20"),   # FIXME:  add electron ID and barrel-endcap gap veto  
             numberRequired = cms.string("== 0"),
             isVeto = cms.bool(True),
             alias = cms.string("electron veto")
@@ -66,25 +59,25 @@ channelWZ = cms.PSet(
             cutString = cms.string("fabs(eta) < 2.0"),
             numberRequired = cms.string("== 2"),
         ),
-        # JET CONSTITUENTS 
-        cms.PSet (
-            inputCollection = cms.vstring("jets"),
-#            cutString = cms.string("Nconst < 30"),
-            cutString = cms.string("Nconst < 100"),
-            numberRequired = cms.string("== 2"),
-        ),
-        # JET ETA DIFFERENCE
-        cms.PSet (
-            inputCollection = cms.vstring("jets", "jets"),
-            cutString = cms.string("fabs ( jet.eta - jet.eta ) < 1.2"),
-            numberRequired = cms.string(">= 1"),
-        ),
-        # JET-JET INVARIANT MASS 
-        cms.PSet (
-            inputCollection = cms.vstring("jets", "jets"),
-            cutString = cms.string("invMass (jet, jet) > 500"),  
-            numberRequired = cms.string("== 1"),
-        ),
+# #         # JET CONSTITUENTS 
+# #         cms.PSet (
+# #             inputCollection = cms.vstring("jets"),
+# # #            cutString = cms.string("Nconst < 30"),
+# #             cutString = cms.string("Nconst < 100"),
+# #             numberRequired = cms.string("== 2"),
+# #         ),
+#         # JET ETA DIFFERENCE
+#         cms.PSet (
+#             inputCollection = cms.vstring("jets", "jets"),
+#             cutString = cms.string("fabs ( jet.eta - jet.eta ) < 1.2"),
+#             numberRequired = cms.string("== 1"),
+#         ),
+#         # JET-JET INVARIANT MASS 
+#         cms.PSet (
+#             inputCollection = cms.vstring("jets", "jets"),
+#             cutString = cms.string("invMass (jet, jet) > 500"),  
+#             numberRequired = cms.string("== 1"),
+#         ),
     )
 )
 

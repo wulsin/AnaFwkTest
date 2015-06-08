@@ -9,6 +9,12 @@ histograms = cms.PSet(
     inputCollection = cms.vstring("muons"),
     histograms = cms.VPSet (
         cms.PSet (
+            name = cms.string("muonNum"),
+            title = cms.string("Number of selected muons; Number of selected muons"),
+            binsX = cms.untracked.vdouble(10, -0.5, 9.5),
+            inputVariables = cms.vstring("number ( muon )"),
+        ),
+        cms.PSet (
             name = cms.string("muonPt"),
             title = cms.string("Muon Transverse Momentum; muon p_{T} [GeV]"),
             binsX = cms.untracked.vdouble(100, 0, 500),
@@ -28,22 +34,34 @@ MyElectronHistograms = cms.PSet(
     inputCollection = cms.vstring("electrons"),
     histograms = cms.VPSet (
         cms.PSet (
+            name = cms.string("electronNum"),
+            title = cms.string("Number of selected electrons; Number of selected electrons"),
+            binsX = cms.untracked.vdouble(10, -0.5, 9.5),
+            inputVariables = cms.vstring("number ( electron )"),
+        ),
+        cms.PSet (
             name = cms.string("electronPt"),
             title = cms.string("Electron Transverse Momentum; electron p_{T} [GeV]"),
             binsX = cms.untracked.vdouble(100, 0, 500),
             inputVariables = cms.vstring("pt"),
         ),
-         cms.PSet (
-            name = cms.string("electronGenPt"),
-            title = cms.string("Electron Gen. Transverse Momentum; generated electron p_{T} [GeV]"),
-            binsX = cms.untracked.vdouble(100, 0, 500),
-            inputVariables = cms.vstring("genPT"),
-        ),
+        #  cms.PSet (
+        #     name = cms.string("electronGenPt"),
+        #     title = cms.string("Electron Gen. Transverse Momentum; generated electron p_{T} [GeV]"),
+        #     binsX = cms.untracked.vdouble(100, 0, 500),
+        #     inputVariables = cms.vstring("genPT"),
+        # ),
         cms.PSet (
             name = cms.string("electronEta"),
             title = cms.string("Electron Eta; electron #eta"),
             binsX = cms.untracked.vdouble(100, -3, 3),
             inputVariables = cms.vstring("eta"),
+        ),
+        cms.PSet (
+            name = cms.string("electronId"),
+            title = cms.string("Electron ID; electron ID"),
+            binsX = cms.untracked.vdouble(4, -1.5, 2.5),
+            inputVariables = cms.vstring(electronID),
         ),
     )
 )
@@ -85,7 +103,7 @@ JetJetHistograms = cms.PSet(
         cms.PSet (
             name = cms.string("jetjetInvMass"),
             title = cms.string("Invariant mass of 2 jets"),
-            binsX = cms.untracked.vdouble(100, 0, 2000),
+            binsX = cms.untracked.vdouble(350, 0, 3500),
             inputVariables = cms.vstring("invMass (jet, jet)"),
         ),
     )
@@ -95,6 +113,12 @@ JetJetHistograms = cms.PSet(
 MyJetHistograms = cms.PSet(
     inputCollection = cms.vstring("jets"),
     histograms = cms.VPSet (
+        cms.PSet (
+            name = cms.string("jetNum"),
+            title = cms.string("Number of selected jets; Number of selected jets"),
+            binsX = cms.untracked.vdouble(10, -0.5, 9.5),
+            inputVariables = cms.vstring("number ( jet )"),
+        ),
         cms.PSet (
             name = cms.string("jetPt"),
             title = cms.string("Jet Transverse Momentum; p_{T} [GeV]"),
@@ -113,12 +137,12 @@ MyJetHistograms = cms.PSet(
             binsX = cms.untracked.vdouble(100, -3.15, 3.15),
             inputVariables = cms.vstring("phi"),
         ),
-        cms.PSet (
-            name = cms.string("jetNConst"),
-            title = cms.string("Jet NConst; number of constituents"),
-            binsX = cms.untracked.vdouble(50, 0, 100),
-            inputVariables = cms.vstring("Nconst"),
-        ),
+        # cms.PSet (
+        #     name = cms.string("jetNConst"),
+        #     title = cms.string("Jet NConst; number of constituents"),
+        #     binsX = cms.untracked.vdouble(50, 0, 100),
+        #     inputVariables = cms.vstring("Nconst"),
+        # ),
         cms.PSet (
             name = cms.string("jetMass"),
             title = cms.string("Jet mass; m_{j} [GeV]"),
@@ -150,12 +174,12 @@ MyJetHistograms = cms.PSet(
             binsY = cms.untracked.vdouble(100, -3, 3), 
             inputVariables = cms.vstring("phi","eta"),
         ),
-        cms.PSet (
-            name = cms.string("jetFlavor"),
-            title = cms.string("Jet Flavor"),
-            binsX = cms.untracked.vdouble(42, -21, 21),
-            inputVariables = cms.vstring("flavour"),
-        ),
+        # cms.PSet (
+        #     name = cms.string("jetFlavor"),
+        #     title = cms.string("Jet Flavor"),
+        #     binsX = cms.untracked.vdouble(42, -21, 21),
+        #     inputVariables = cms.vstring("flavour"),
+        # ),
         cms.PSet (
             name = cms.string("jetChargedHadronEnergyFraction"),
             title = cms.string("Jet Charged Hadron Fraction"),
@@ -174,18 +198,18 @@ MyJetHistograms = cms.PSet(
             binsX = cms.untracked.vdouble(120, -0.1, 1.1),
             inputVariables = cms.vstring("neutralEmEnergyFraction"),
         ),
-        cms.PSet (
-            name = cms.string("jetChargedEMEnergyFraction"),
-            title = cms.string("Jet Charged EM Fraction"),
-            binsX = cms.untracked.vdouble(120, -0.1, 1.1),
-            inputVariables = cms.vstring("chargedEmEnergyFraction"),
-        ),
-        cms.PSet (
-            name = cms.string("jetCSV"),
-            title = cms.string("Jet Combined Secondary Vertex B-tagging Discriminant"),
-            binsX = cms.untracked.vdouble(100, -1, 1),
-            inputVariables = cms.vstring("btagCombinedSecVertex"),
-        ),
+        # cms.PSet (
+        #     name = cms.string("jetChargedEMEnergyFraction"),
+        #     title = cms.string("Jet Charged EM Fraction"),
+        #     binsX = cms.untracked.vdouble(120, -0.1, 1.1),
+        #     inputVariables = cms.vstring("chargedEmEnergyFraction"),
+        # ),
+        # cms.PSet (
+        #     name = cms.string("jetCSV"),
+        #     title = cms.string("Jet Combined Secondary Vertex B-tagging Discriminant"),
+        #     binsX = cms.untracked.vdouble(100, -1, 1),
+        #     inputVariables = cms.vstring("btagCombinedSecVertex"),
+        # ),
         # cms.PSet (
         #     name = cms.string("jetSize"),
         #     title = cms.string("Number of Jets"),
@@ -230,3 +254,27 @@ MyProtoHistograms = cms.PSet(
     )
 )
 
+
+MyMetHistograms = cms.PSet(
+    inputCollection = cms.vstring("mets"),
+    histograms = cms.VPSet (
+        cms.PSet (
+            name = cms.string("metNum"),
+            title = cms.string("Number of selected Mets; Number of selected Mets"),
+            binsX = cms.untracked.vdouble(10, -0.5, 9.5),
+            inputVariables = cms.vstring("number ( met )"),
+        ),
+        cms.PSet (
+            name = cms.string("metPt"),
+            title = cms.string("Missing E_{T}; E_{T}^{miss} [GeV]"),
+            binsX = cms.untracked.vdouble(100, 0, 500),
+            inputVariables = cms.vstring("pt"),
+        ),
+        cms.PSet (
+            name = cms.string("metPhi"),
+            title = cms.string("Phi of Missing E_{T}; #phi(E_{T}^{miss})"),
+            binsX = cms.untracked.vdouble(100, -3.15, 3.15),
+            inputVariables = cms.vstring("phi"),
+        ),
+    )
+)
