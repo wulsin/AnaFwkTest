@@ -46,7 +46,7 @@ channelWZ = cms.PSet(
             isVeto = cms.bool(True),
             alias = cms.string("electron veto")
         ),
-        # PT OF 2 JETS 
+        # JET PT 
         cms.PSet (
             inputCollection = cms.vstring("basicjets"),
             cutString = cms.string("pt > 20"),
@@ -65,18 +65,19 @@ channelWZ = cms.PSet(
 # #             cutString = cms.string("Nconst < 100"),
 # #             numberRequired = cms.string("== 2"),
 # #         ),
-#         # JET ETA DIFFERENCE
-#         cms.PSet (
-#             inputCollection = cms.vstring("basicjets", "basicjets"),
-#             cutString = cms.string("fabs ( jet.eta - jet.eta ) < 1.2"),
-#             numberRequired = cms.string("== 1"),
-#         ),
-#         # JET-JET INVARIANT MASS 
-#         cms.PSet (
-#             inputCollection = cms.vstring("basicjets", "basicjets"),
-#             cutString = cms.string("invMass (jet, jet) > 500"),  
-#             numberRequired = cms.string("== 1"),
-#         ),
+        # JET RAPIDITY DIFFERENCE
+        cms.PSet (
+            inputCollection = cms.vstring("basicjets", "basicjets"),
+            cutString = cms.string("fabs ( basicjet.rapidity - basicjet.rapidity ) < 1.2"),
+            numberRequired = cms.string("== 1"),
+        ),
+        # JET-JET INVARIANT MASS 
+        cms.PSet (
+            inputCollection = cms.vstring("basicjets", "basicjets"),
+#            cutString = cms.string("invMass (basicjet, basicjet) > 1050"),  # Value in arXiv:1506.00962
+            cutString = cms.string("invMass (basicjet, basicjet) > 500"),   # for testing
+            numberRequired = cms.string("== 1"),
+        ),
     )
 )
 
