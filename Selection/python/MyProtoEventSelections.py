@@ -9,8 +9,7 @@ from AnaFwkTest.Selection.CommonUtils import *
  
 channelWZ = cms.PSet(
     name = cms.string("channelWZ"),
-    triggers = cms.vstring(""),  # FIXME:  Add trigger!  
-#    triggers = cms.vstring("HLT_PFJet320_v"), # TRIGGER   
+    triggers = cms.vstring("HLT_PFJet320_v"), # TRIGGER   
     cuts = cms.VPSet (
         # # EVENT CLEANING
         # cms.PSet (

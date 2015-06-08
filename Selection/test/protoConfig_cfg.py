@@ -62,7 +62,7 @@ collections = cms.PSet (
     superclusters   =  cms.InputTag  (''),
     taus            =  cms.InputTag  ('hpsPFTauProducer'),
     tracks          =  cms.InputTag  ('generalTracks'),
-    triggers        =  cms.InputTag  ('TriggerResults'),
+    triggers        =  cms.InputTag  ("TriggerResults","","HLT"),   
     trigobjs        =  cms.InputTag  (''),
 )
 
