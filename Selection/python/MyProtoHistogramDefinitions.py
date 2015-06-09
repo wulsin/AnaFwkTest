@@ -341,6 +341,18 @@ MyEventVarHistograms = cms.PSet(
             binsX = cms.untracked.vdouble(50, 0, 50),
             inputVariables = cms.vstring("basicjetNConst1"),
         ),
+        cms.PSet (
+            name = cms.string("basicjetMaxSqrtY"),
+            title = cms.string("maximum #sqrt{y} of two leading fat jets;max #sqrt{y}"),
+            binsX = cms.untracked.vdouble(100, 0, 1),
+            inputVariables = cms.vstring("maxSqrtY"),
+        ),
+        cms.PSet (
+            name = cms.string("basicjetMinSqrtY"),
+            title = cms.string("minimum #sqrt{y} of two leading fat jets;min #sqrt{y}"),
+            binsX = cms.untracked.vdouble(100, 0, 1),
+            inputVariables = cms.vstring("minSqrtY"),
+        ),
     )
 )
 

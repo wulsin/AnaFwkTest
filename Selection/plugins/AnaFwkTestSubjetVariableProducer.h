@@ -13,6 +13,7 @@ class AnaFwkTestSubjetVariableProducer : public EventVariableProducer
 
 	// Functions
 	void AddVariables(const edm::Event &);
+        double jetMass (const reco::BasicJet &) const;
   };
 
 #endif

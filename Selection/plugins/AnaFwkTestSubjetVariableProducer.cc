@@ -40,7 +40,7 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
                                handles_.basicjets->at (0).getJetConstituents ().at (1)->eta (),
                                handles_.basicjets->at (0).getJetConstituents ().at (1)->phi (),
                                handles_.basicjets->at (0).getJetConstituents ().at (1)->energy ());
-        sqrtY0 = min<double> (p.first.Pt (), p.second.Pt ()) * (p.first.DeltaR (p.second) / handles_.basicjets->at (0).mass ());
+        sqrtY0 = min<double> (p.first.Pt (), p.second.Pt ()) * (p.first.DeltaR (p.second) / jetMass (handles_.basicjets->at (0)));
       }
     if (handles_.basicjets->at (1).nConstituents () > 1)
       {
@@ -53,7 +53,7 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
                                handles_.basicjets->at (1).getJetConstituents ().at (1)->eta (),
                                handles_.basicjets->at (1).getJetConstituents ().at (1)->phi (),
                                handles_.basicjets->at (1).getJetConstituents ().at (1)->energy ());
-        sqrtY0 = min<double> (p.first.Pt (), p.second.Pt ()) * (p.first.DeltaR (p.second) / handles_.basicjets->at (1).mass ());
+        sqrtY1 = min<double> (p.first.Pt (), p.second.Pt ()) * (p.first.DeltaR (p.second) / jetMass (handles_.basicjets->at (1)));
       }
   }
 
@@ -61,6 +61,12 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
   (*eventvariables)["maxSqrtY"] = max<double> (sqrtY0, sqrtY1);
 
 }  
+
+double
+AnaFwkTestSubjetVariableProducer::jetMass (const reco::BasicJet &jet) const
+{
+  return (jet.getJetConstituents ().at (0)->p4 () + jet.getJetConstituents ().at (1)->p4 ()).M ();
+}
 
 #include "FWCore/Framework/interface/MakerMacros.h"
 DEFINE_FWK_MODULE(AnaFwkTestSubjetVariableProducer);
