@@ -94,9 +94,11 @@ from OSUT3Analysis.Configuration.histogramDefinitions import *
 ##### Attach the channels and histograms to the process ########################
 ################################################################################
 
-#add_channels (process, [eMuMinimal], cms.VPSet (histograms), collections, variableProducers, False)
-add_channels (process, [channelWZ], cms.VPSet (histograms, MyElectronHistograms, MyBasicJetHistograms, MyMetHistograms, BasicjetBasicjetHistograms, MyUserVarHistograms), collections, variableProducers, False)
-#add_channels (process, [channelWZ], cms.VPSet (histograms, MyElectronHistograms, MyBasicJetHistograms, MyMetHistograms, BasicjetBasicjetHistograms), collections, variableProducers, True)
+add_channels (process, [channelWZ], cms.VPSet (histograms, MyElectronHistograms, MyBasicJetHistograms, MyMetHistograms, BasicjetBasicjetHistograms, MyEventVarHistograms), collections, variableProducers, False)
 
 # uncomment to produce a full python configuration log file
 outfile = open('dumpedConfig.py','w'); print >> outfile,process.dumpPython(); outfile.close()
+
+#process.Tracer = cms.Service("Tracer")
+
+

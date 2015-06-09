@@ -302,7 +302,7 @@ MyBasicJetHistograms = cms.PSet(
 )
 
 
-MyUserVarHistograms = cms.PSet(
+MyEventVarHistograms = cms.PSet(
     inputCollection = cms.vstring("eventvariables"),
     histograms = cms.VPSet (
         cms.PSet (
@@ -316,6 +316,18 @@ MyUserVarHistograms = cms.PSet(
             title = cms.string("Met pt; MET"), 
             binsX = cms.untracked.vdouble(100, 0, 500),
             inputVariables = cms.vstring("metPt"),
+        ),
+        cms.PSet (
+            name = cms.string("basicjetMassHi"),
+            title = cms.string("mass of higher-mass jet; jet mass [GeV]"), 
+            binsX = cms.untracked.vdouble(100, 0, 500),
+            inputVariables = cms.vstring("basicjetMassHi"),
+        ),
+        cms.PSet (
+            name = cms.string("basicjetMassLo"),
+            title = cms.string("mass of lower-mass jet; jet mass [GeV]"), 
+            binsX = cms.untracked.vdouble(100, 0, 500),
+            inputVariables = cms.vstring("basicjetMassLo"),
         ),
     )
 )
@@ -351,23 +363,23 @@ MyProtoHistograms = cms.PSet(
 MyMetHistograms = cms.PSet(
     inputCollection = cms.vstring("mets"),
     histograms = cms.VPSet (
-        cms.PSet (
-            name = cms.string("metNum"),
-            title = cms.string("Number of selected Mets; Number of selected Mets"),
-            binsX = cms.untracked.vdouble(10, -0.5, 9.5),
-            inputVariables = cms.vstring("number ( met )"),
-        ),
+        # cms.PSet (
+        #     name = cms.string("metNum"),
+        #     title = cms.string("Number of selected Mets; Number of selected Mets"),
+        #     binsX = cms.untracked.vdouble(10, -0.5, 9.5),
+        #     inputVariables = cms.vstring("number ( met )"),
+        # ),
         cms.PSet (
             name = cms.string("metPt"),
             title = cms.string("Missing E_{T}; E_{T}^{miss} [GeV]"),
             binsX = cms.untracked.vdouble(100, 0, 500),
             inputVariables = cms.vstring("pt"),
         ),
-        cms.PSet (
-            name = cms.string("metPhi"),
-            title = cms.string("Phi of Missing E_{T}; #phi(E_{T}^{miss})"),
-            binsX = cms.untracked.vdouble(100, -3.15, 3.15),
-            inputVariables = cms.vstring("phi"),
-        ),
+        # cms.PSet (
+        #     name = cms.string("metPhi"),
+        #     title = cms.string("Phi of Missing E_{T}; #phi(E_{T}^{miss})"),
+        #     binsX = cms.untracked.vdouble(100, -3.15, 3.15),
+        #     inputVariables = cms.vstring("phi"),
+        # ),
     )
 )

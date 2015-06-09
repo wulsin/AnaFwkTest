@@ -6,23 +6,17 @@ from AnaFwkTest.Selection.CommonUtils import *
 ##### WZ channel
 ##########################################################################
 
+channelDebug = cms.PSet(
+    name = cms.string("channelDebug"),
+    triggers = cms.vstring("HLT_PFJet320_v"), # TRIGGER   
+    cuts = cms.VPSet (
+    )
+)
  
 channelWZ = cms.PSet(
     name = cms.string("channelWZ"),
     triggers = cms.vstring("HLT_PFJet320_v"), # TRIGGER   
     cuts = cms.VPSet (
-        # # EVENT CLEANING
-        # cms.PSet (
-        #     inputCollection = cms.vstring("events"),
-        #     cutString = cms.string("FilterOutScraping > 0"),
-        #     numberRequired = cms.string(">= 1")
-        # ),
-        # # EVENT HAS GOOD PV
-        # cms.PSet (
-        #     inputCollection = cms.vstring("primaryvertexs"),
-        #     cutString = cms.string("isGood > 0"),
-        #     numberRequired = cms.string(">= 1")
-        # ),
         # MET CUT
         cms.PSet (
             inputCollection = cms.vstring("mets"),
@@ -71,6 +65,24 @@ channelWZ = cms.PSet(
             cutString = cms.string("fabs ( basicjet.rapidity - basicjet.rapidity ) < 1.2"),
             numberRequired = cms.string("== 1"),
         ),
+        # JET-JET PT BALANCE
+        cms.PSet (
+            inputCollection = cms.vstring("eventvariables"),
+            cutString = cms.string("basicjetRelPtDiff < 0.15"),
+            numberRequired = cms.string(">= 1"),
+        ),
+        # WZ CHANNEL:  LARGER MASS CONSISTENT WITH Z
+        cms.PSet (
+            inputCollection = cms.vstring("eventvariables"),
+            cutString = cms.string("fabs ( basicjetMassHi - " + str(massZ) + " ) < 13"),   
+            numberRequired = cms.string(">= 1"),
+        ),
+        # WZ CHANNEL:  SMALLER MASS CONSISTENT WITH W
+        cms.PSet (
+            inputCollection = cms.vstring("eventvariables"),
+            cutString = cms.string("fabs ( basicjetMassLo - " + str(massW) + " ) < 13"),   
+            numberRequired = cms.string(">= 1"),
+        ),
         # JET-JET INVARIANT MASS 
         cms.PSet (
             inputCollection = cms.vstring("basicjets", "basicjets"),
@@ -78,18 +90,6 @@ channelWZ = cms.PSet(
             cutString = cms.string("invMass (basicjet, basicjet) > 500"),   # for testing
             numberRequired = cms.string("== 1"),
         ),
-        # JET-JET PT BALANCE
-        cms.PSet (
-            inputCollection = cms.vstring("eventvariables"),
-            cutString = cms.string("basicjetRelPtDiff < 0.15"),
-            numberRequired = cms.string(">= 1"),
-        ),
-#        # JET-JET PT BALANCE
-#        cms.PSet (
-#            inputCollection = cms.vstring("basicjets","basicjets"),
-#            cutString = cms.string("basicjetRelPtDiff < 0.15"),
-#            numberRequired = cms.string(">= 1"),
-#        ),
     )
 )
 

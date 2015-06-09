@@ -29,7 +29,23 @@ AnaFwkTestEventVariableProducer::AddVariables (const edm::Event &event) {
     double pt2 = (*handles_.basicjets).at(1).pt();  
     double relPtDiff = (pt1 - pt2) / (pt1 + pt2);  
     (*eventvariables)["basicjetRelPtDiff"] = relPtDiff;
+
+    double m1 = (*handles_.basicjets).at(0).mass();  
+    double m2 = (*handles_.basicjets).at(1).mass();  
+    double mhi, mlo;  
+    if (m1 > m2) {
+      mhi = m1;
+      mlo = m2;
+    } else {
+      mhi = m2;
+      mlo = m1;
+    }  
+    (*eventvariables)["basicjetMassHi"] = mhi;  
+    (*eventvariables)["basicjetMassLo"] = mlo;  
+
   }
+
+  //  cout << "Debug:  added event variable:  metPt = " <<  (*eventvariables)["metPt"] << endl;  
 
 }  
 
