@@ -20,16 +20,19 @@ AnaFwkTestEventVariableProducer::AddVariables (const edm::Event &event) {
 
   (*eventvariables)["metPt"] = (*handles_.mets).at(0).pt();
 
-  // calculate relative pt difference
   // There should be only 2 leading basicjets. 
   if ((*handles_.basicjets).size() != 2) {
     cout << "ERROR:  number of basic jets should be exactly 2!  " << endl;  
   } else {
+
+
+    // Calculate relative pt difference
     double pt1 = (*handles_.basicjets).at(0).pt();  
     double pt2 = (*handles_.basicjets).at(1).pt();  
     double relPtDiff = (pt1 - pt2) / (pt1 + pt2);  
     (*eventvariables)["basicjetRelPtDiff"] = relPtDiff;
 
+    // Calculate mass of upper and lower jets.  
     double m1 = (*handles_.basicjets).at(0).mass();  
     double m2 = (*handles_.basicjets).at(1).mass();  
     double mhi, mlo;  
@@ -42,6 +45,22 @@ AnaFwkTestEventVariableProducer::AddVariables (const edm::Event &event) {
     }  
     (*eventvariables)["basicjetMassHi"] = mhi;  
     (*eventvariables)["basicjetMassLo"] = mlo;  
+
+    // Calculate number of charged consituents.  
+    int nConst1 = 0;
+    int nConst2 = 0;
+    int nConstChgd1 = 0;
+    int nConstChgd2 = 0;
+    for (const auto &constit : (*handles_.basicjets).at(0).getJetConstituents()) {
+      nConst1++;  
+      if (constit->charge() != 0) {
+	nConstChgd1++;  
+      }
+    }
+    (*eventvariables)["basicjetNConst1"] = nConst1; 
+    (*eventvariables)["basicjetNConst2"] = nConst2; 
+    (*eventvariables)["basicjetNConstChgd1"] = nConstChgd1; 
+    (*eventvariables)["basicjetNConstChgd2"] = nConstChgd2; 
 
   }
 

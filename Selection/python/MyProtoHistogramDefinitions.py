@@ -329,6 +329,18 @@ MyEventVarHistograms = cms.PSet(
             binsX = cms.untracked.vdouble(100, 0, 500),
             inputVariables = cms.vstring("basicjetMassLo"),
         ),
+        cms.PSet (
+            name = cms.string("basicjetNConstChgd1"),
+            title = cms.string("number of charged constituents of jet 1; number of charged constituents of jet 1"), 
+            binsX = cms.untracked.vdouble(50, 0, 50),
+            inputVariables = cms.vstring("basicjetNConstChgd1"),
+        ),
+        cms.PSet (
+            name = cms.string("basicjetNConst1"),
+            title = cms.string("number of constituents of jet 1; number of constituents of jet 1"), 
+            binsX = cms.untracked.vdouble(50, 0, 50),
+            inputVariables = cms.vstring("basicjetNConst1"),
+        ),
     )
 )
 
