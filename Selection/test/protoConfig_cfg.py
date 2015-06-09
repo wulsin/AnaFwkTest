@@ -74,7 +74,8 @@ collections = cms.PSet (
 ################################################################################
 
 variableProducers = []
-variableProducers.append("AnaFwkTestVariableProducer")
+#variableProducers.append("AnaFwkTestVariableProducer")
+variableProducers.append("AnaFwkTestEventVariableProducer")
 
 ################################################################################
 ##### Import the channels to be run ############################################
@@ -98,4 +99,4 @@ add_channels (process, [channelWZ], cms.VPSet (histograms, MyElectronHistograms,
 #add_channels (process, [channelWZ], cms.VPSet (histograms, MyElectronHistograms, MyBasicJetHistograms, MyMetHistograms, BasicjetBasicjetHistograms), collections, variableProducers, True)
 
 # uncomment to produce a full python configuration log file
-#outfile = open('dumpedConfig.py','w'); print >> outfile,process.dumpPython(); outfile.close()
+outfile = open('dumpedConfig.py','w'); print >> outfile,process.dumpPython(); outfile.close()

@@ -78,6 +78,18 @@ channelWZ = cms.PSet(
             cutString = cms.string("invMass (basicjet, basicjet) > 500"),   # for testing
             numberRequired = cms.string("== 1"),
         ),
+        # JET-JET PT BALANCE
+        cms.PSet (
+            inputCollection = cms.vstring("eventvariables"),
+            cutString = cms.string("basicjetRelPtDiff < 0.15"),
+            numberRequired = cms.string(">= 1"),
+        ),
+#        # JET-JET PT BALANCE
+#        cms.PSet (
+#            inputCollection = cms.vstring("basicjets","basicjets"),
+#            cutString = cms.string("basicjetRelPtDiff < 0.15"),
+#            numberRequired = cms.string(">= 1"),
+#        ),
     )
 )
 

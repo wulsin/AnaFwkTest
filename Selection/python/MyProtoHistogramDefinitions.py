@@ -303,19 +303,13 @@ MyBasicJetHistograms = cms.PSet(
 
 
 MyUserVarHistograms = cms.PSet(
-    inputCollection = cms.vstring("uservariables"),
+    inputCollection = cms.vstring("eventvariables"),
     histograms = cms.VPSet (
-        # cms.PSet (
-        #     name = cms.string("basicjetRelPtDiff"),
-        #     title = cms.string("Relative p_{T} difference of leading jets; (p_{T1} - p_{T2}) / (p_{T1} + p_{T2})"),
-        #     binsX = cms.untracked.vdouble(100, -1, 1),
-        #     inputVariables = cms.vstring("basicjetRelPtDiff"),
-        # ),
         cms.PSet (
-            name = cms.string("muonPt"),
-            title = cms.string("Muon pt; muon p_{T}"), 
-            binsX = cms.untracked.vdouble(100, 0, 500),
-            inputVariables = cms.vstring("muonPt"),
+            name = cms.string("basicjetRelPtDiff"),
+            title = cms.string("Relative p_{T} difference of leading jets; (p_{T1} - p_{T2}) / (p_{T1} + p_{T2})"),
+            binsX = cms.untracked.vdouble(100, -1, 1),
+            inputVariables = cms.vstring("basicjetRelPtDiff"),
         ),
         cms.PSet (
             name = cms.string("userVarMetPt"),

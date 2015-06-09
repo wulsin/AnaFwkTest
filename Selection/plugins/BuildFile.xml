@@ -17,6 +17,6 @@
 <use  name="root"/>
 <use  name="rootrflx"/>
 <flags  CXXFLAGS="-mtune=core2 -march=core2 -O3 -pipe"/>
-<library  file="AnaFwkTestVariableProducer.cc"  name="AnaFwkTestSelectionPlugins">
+<library  file="AnaFwkTestVariableProducer.cc,AnaFwkTestEventVariableProducer.cc"  name="AnaFwkTestSelectionPlugins">
   <flags  EDM_PLUGIN="1"/>
 </library>
