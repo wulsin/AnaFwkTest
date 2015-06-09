@@ -57,6 +57,12 @@ channelWZ = cms.PSet(
             inputCollection = cms.vstring("basicjets"),
             cutString = cms.string("nConstituents >= 2"),
             numberRequired = cms.string(">= 2"),
+        # JET SQRT(Y)
+        cms.PSet (
+            inputCollection = cms.vstring("eventvariables"),
+            cutString = cms.string("minSqrtY > 0.45"), # if minSqrtY > 0.45, that means both
+                                                       # leading fat jets are above that cut
+            numberRequired = cms.string(">= 1"),
         ),
 # #         # JET CONSTITUENTS 
 # #         cms.PSet (

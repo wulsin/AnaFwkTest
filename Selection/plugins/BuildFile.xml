@@ -12,7 +12,6 @@
 <use  name="DataFormats/EcalDetId"/>
 <use  name="Geometry/Records"/>
 <use  name="OSUT3Analysis/AnaTools"/>
-<use  name="AnaFwkTest/Selection"/>
 <use  name="lhapdf"/>
 <use  name="root"/>
 <use  name="rootrflx"/>
