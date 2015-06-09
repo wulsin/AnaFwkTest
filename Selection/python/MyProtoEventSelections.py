@@ -52,6 +52,12 @@ channelWZ = cms.PSet(
             cutString = cms.string("fabs(eta) < 2.0"),
             numberRequired = cms.string(">= 2"),
         ),
+        # REQUIRE EACH FAT JET TO HAVE AT LEAST 2 SUBJETS
+        cms.PSet (
+            inputCollection = cms.vstring("basicjets"),
+            cutString = cms.string("nConstituents >= 2"),
+            numberRequired = cms.string(">= 2"),
+        ),
 # #         # JET CONSTITUENTS 
 # #         cms.PSet (
 # #             inputCollection = cms.vstring("basicjets"),
@@ -74,13 +80,13 @@ channelWZ = cms.PSet(
         # WZ CHANNEL:  LARGER MASS CONSISTENT WITH Z
         cms.PSet (
             inputCollection = cms.vstring("eventvariables"),
-            cutString = cms.string("fabs ( basicjetMassHi - " + str(massZ) + " ) < 13"),   
+            cutString = cms.string("fabs ( basicjetsInvMassSubjetsMax - " + str(massZ) + " ) < 13"),   
             numberRequired = cms.string(">= 1"),
         ),
         # WZ CHANNEL:  SMALLER MASS CONSISTENT WITH W
         cms.PSet (
             inputCollection = cms.vstring("eventvariables"),
-            cutString = cms.string("fabs ( basicjetMassLo - " + str(massW) + " ) < 13"),   
+            cutString = cms.string("fabs ( basicjetsInvMassSubjetsMin - " + str(massW) + " ) < 13"),   
             numberRequired = cms.string(">= 1"),
         ),
         # JET-JET INVARIANT MASS 

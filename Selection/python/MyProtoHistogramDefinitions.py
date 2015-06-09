@@ -286,6 +286,12 @@ MyBasicJetHistograms = cms.PSet(
             inputVariables = cms.vstring("mass - " + str(massZ)),
         ),
         cms.PSet (
+            name = cms.string("nConstituents"),
+            title = cms.string("Number of subjets; Number of subjets"), 
+            binsX = cms.untracked.vdouble(30, 0, 30),
+            inputVariables = cms.vstring("nConstituents"),
+        ),
+        cms.PSet (
             name = cms.string("jetCharge"),
             title = cms.string("Jet Charge; charge"),
             binsX = cms.untracked.vdouble(3, -1.5, 1.5),
@@ -318,16 +324,40 @@ MyEventVarHistograms = cms.PSet(
             inputVariables = cms.vstring("metPt"),
         ),
         cms.PSet (
+            name = cms.string("basicjetMassLo"),
+            title = cms.string("mass of lower-mass jet; jet mass [GeV]"), 
+            binsX = cms.untracked.vdouble(100, 0, 500),
+            inputVariables = cms.vstring("basicjetMassLo"),
+        ),
+        cms.PSet (
             name = cms.string("basicjetMassHi"),
             title = cms.string("mass of higher-mass jet; jet mass [GeV]"), 
             binsX = cms.untracked.vdouble(100, 0, 500),
             inputVariables = cms.vstring("basicjetMassHi"),
         ),
         cms.PSet (
-            name = cms.string("basicjetMassLo"),
+            name = cms.string("basicjetInvMassSubjetsMin"),
             title = cms.string("mass of lower-mass jet; jet mass [GeV]"), 
             binsX = cms.untracked.vdouble(100, 0, 500),
-            inputVariables = cms.vstring("basicjetMassLo"),
+            inputVariables = cms.vstring("basicjetsInvMassSubjetsMin"),
+        ),
+        cms.PSet (
+            name = cms.string("basicjetInvMassSubjetsMax"),
+            title = cms.string("mass of higher-mass jet; jet mass [GeV]"), 
+            binsX = cms.untracked.vdouble(100, 0, 500),
+            inputVariables = cms.vstring("basicjetsInvMassSubjetsMax"),
+        ),
+        cms.PSet (
+            name = cms.string("basicjetMassDiffMin"),
+            title = cms.string("; (m_{function} - m_{constituents}) / m_{function}"), 
+            binsX = cms.untracked.vdouble(100, -1, 1),
+            inputVariables = cms.vstring("( basicjetMassLo - basicjetsInvMassSubjetsMin ) / basicjetMassLo"),
+        ),
+        cms.PSet (
+            name = cms.string("basicjetMassDiffMax"),
+            title = cms.string("; (m_{function} - m_{constituents}) / m_{function}"), 
+            binsX = cms.untracked.vdouble(100, -1, 1),
+            inputVariables = cms.vstring("( basicjetMassHi - basicjetsInvMassSubjetsMax ) / basicjetMassHi"),
         ),
         cms.PSet (
             name = cms.string("basicjetNConstChgd1"),

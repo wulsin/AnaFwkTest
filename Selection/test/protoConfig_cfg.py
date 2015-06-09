@@ -74,8 +74,8 @@ collections = cms.PSet (
 ################################################################################
 
 variableProducers = []
-#variableProducers.append("AnaFwkTestVariableProducer")
 variableProducers.append("AnaFwkTestEventVariableProducer")
+variableProducers.append("AnaFwkTestSubjetVariableProducer")
 
 ################################################################################
 ##### Import the channels to be run ############################################

@@ -25,6 +25,7 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
   //  cout << (*handles_.basicjets).at(0).getJetConstituents().at(0)->pt() << endl;
 
   double sqrtY0 = 0.0, sqrtY1 = 0.0;
+  double invMassSubjets0 = 0.0, invMassSubjets1 = 0.0;  
   if ((*handles_.basicjets).size() != 2) {
     cout << "ERROR:  number of basic jets should be exactly 2!  " << endl;
   } 
@@ -41,6 +42,9 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
                                handles_.basicjets->at (0).getJetConstituents ().at (1)->phi (),
                                handles_.basicjets->at (0).getJetConstituents ().at (1)->energy ());
         sqrtY0 = min<double> (p.first.Pt (), p.second.Pt ()) * (p.first.DeltaR (p.second) / handles_.basicjets->at (0).mass ());
+	TLorentzVector sum;
+	sum = p.first + p.second;  
+	invMassSubjets0 = sum.M();  
       }
     if (handles_.basicjets->at (1).nConstituents () > 1)
       {
@@ -54,11 +58,18 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
                                handles_.basicjets->at (1).getJetConstituents ().at (1)->phi (),
                                handles_.basicjets->at (1).getJetConstituents ().at (1)->energy ());
         sqrtY0 = min<double> (p.first.Pt (), p.second.Pt ()) * (p.first.DeltaR (p.second) / handles_.basicjets->at (1).mass ());
+	TLorentzVector sum;
+	sum = p.first + p.second;  
+	invMassSubjets1 = sum.M();  
       }
   }
 
   (*eventvariables)["minSqrtY"] = min<double> (sqrtY0, sqrtY1);
   (*eventvariables)["maxSqrtY"] = max<double> (sqrtY0, sqrtY1);
+
+
+  (*eventvariables)["basicjetsInvMassSubjetsMin"] = min<double> (invMassSubjets0, invMassSubjets1);  
+  (*eventvariables)["basicjetsInvMassSubjetsMax"] = max<double> (invMassSubjets0, invMassSubjets1);  
 
 }  
 
