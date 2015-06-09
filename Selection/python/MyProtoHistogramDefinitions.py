@@ -372,16 +372,16 @@ MyEventVarHistograms = cms.PSet(
             inputVariables = cms.vstring("basicjetNConst1"),
         ),
         cms.PSet (
-            name = cms.string("basicjetMaxSqrtY"),
-            title = cms.string("maximum #sqrt{y} of two leading fat jets;max #sqrt{y}"),
-            binsX = cms.untracked.vdouble(100, 0, 1),
-            inputVariables = cms.vstring("maxSqrtY"),
+            name = cms.string("chargedMultiplicity0"),
+            title = cms.string("charged multiplicity of jet 0; charged multiplicity of jet 0"), 
+            binsX = cms.untracked.vdouble(50, 0, 50),
+            inputVariables = cms.vstring("chargedMultiplicity0"),
         ),
         cms.PSet (
-            name = cms.string("basicjetMinSqrtY"),
-            title = cms.string("minimum #sqrt{y} of two leading fat jets;min #sqrt{y}"),
-            binsX = cms.untracked.vdouble(100, 0, 1),
-            inputVariables = cms.vstring("minSqrtY"),
+            name = cms.string("chargedMultiplicity1"),
+            title = cms.string("charged multiplicity of jet 1; charged multiplicity of jet 1"), 
+            binsX = cms.untracked.vdouble(50, 0, 50),
+            inputVariables = cms.vstring("chargedMultiplicity1"),
         ),
     )
 )

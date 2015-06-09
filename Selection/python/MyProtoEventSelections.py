@@ -57,6 +57,7 @@ channelWZ = cms.PSet(
             inputCollection = cms.vstring("basicjets"),
             cutString = cms.string("nConstituents >= 2"),
             numberRequired = cms.string(">= 2"),
+        ),
         # JET SQRT(Y)
         cms.PSet (
             inputCollection = cms.vstring("eventvariables"),
@@ -64,19 +65,24 @@ channelWZ = cms.PSet(
                                                        # leading fat jets are above that cut
             numberRequired = cms.string(">= 1"),
         ),
-# #         # JET CONSTITUENTS 
-# #         cms.PSet (
-# #             inputCollection = cms.vstring("basicjets"),
-# # #            cutString = cms.string("Nconst < 30"),
-# #             cutString = cms.string("Nconst < 100"),
-# #             numberRequired = cms.string("== 2"),
-# #         ),
         # JET RAPIDITY DIFFERENCE
         cms.PSet (
             inputCollection = cms.vstring("basicjets", "basicjets"),
             cutString = cms.string("fabs ( basicjet.rapidity - basicjet.rapidity ) < 1.2"),
             numberRequired = cms.string("== 1"),
         ),
+        # # CHARGED MULTIPLICITY OF JET 1 
+        # cms.PSet (
+        #     inputCollection = cms.vstring("eventvariables"),
+        #     cutString = cms.string("chargedMultiplicity0 < 30"),
+        #     numberRequired = cms.string(">= 1"),
+        # ),
+        # # CHARGED MULTIPLICITY OF JET 2
+        # cms.PSet (
+        #     inputCollection = cms.vstring("eventvariables"),
+        #     cutString = cms.string("chargedMultiplicity1 < 30"),
+        #     numberRequired = cms.string(">= 1"),
+        # ),
         # JET-JET PT BALANCE
         cms.PSet (
             inputCollection = cms.vstring("eventvariables"),
@@ -102,8 +108,8 @@ channelWZ = cms.PSet(
             cutString = cms.string("invMass (basicjet, basicjet) > 500"),   # for testing
             numberRequired = cms.string("== 1"),
         ),
+        )
     )
-)
 
 ##########################################################################
 ######## Set up the preselection for the displaced SUSY analysis #########
