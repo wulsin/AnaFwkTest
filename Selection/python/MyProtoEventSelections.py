@@ -31,14 +31,54 @@ channelWZ = cms.PSet(
             isVeto = cms.bool(True),
             alias = cms.string("muon veto")
         ),
-        # ELECTRON VETO
+        # Start Electron Veto
         cms.PSet (
             inputCollection = cms.vstring("electrons"),
-#            cutString = cms.string("pt > 20 && isEBEEGap = 0 && " + electronID),
-            cutString = cms.string("pt > 20"),   # FIXME:  add electron ID and barrel-endcap gap veto  
+            cutString = cms.string("pt > 20"),
+            numberRequired = cms.string(">= 0"),
+        ),
+        cms.PSet (
+            inputCollection = cms.vstring("electrons"),
+            cutString = cms.string("abs(eta) < 1.4442 | abs(eta) > 1.566"),
+            numberRequired = cms.string(">= 0"),
+        ),
+        # ELECTRON ISOLATION
+        cms.PSet (
+            inputCollection = cms.vstring("electrons"),
+            cutString = cms.string("                \
+                (pfIso_.sumChargedHadronPt \
+                + max(0.0,                            \
+                pfIso_.sumNeutralHadronEt                    \
+                + pfIso_.sumPhotonEt                        \
+                - 0.5*pfIso_.sumPUPt))                        \
+                /pt < 0.10"),
+            numberRequired = cms.string(">= 0"),
+            alias = cms.string("electron dBeta isolation < 0.1")
+        ),
+        # ELECTRON DXY
+        cms.PSet (
+            inputCollection = cms.vstring("electrons","beamspots"),
+            cutString = cms.string("abs(((electron.vx - beamspot.x0)*electron.py + (electron.vy - beamspot.y0)*electron.px)/electron.pt) < 0.02"),
+            numberRequired = cms.string(">= 0"),
+            alias = cms.string("electron dxy(beamspot)")
+         ), 
+        cms.PSet (
+            inputCollection = cms.vstring("electrons"),
+            cutString = cms.string(" ( \
+                abs(eta) < 1.479 & abs(deltaEtaSuperClusterTrackAtVtx) < 0.004 & \
+                abs(deltaPhiSuperClusterTrackAtVtx) < 0.03 & \
+                scSigmaIEtaIEta < 0.01 & \
+                hadronicOverEm < 0.12  & \
+                abs(1/et - 1/pt ) < 0.05  & \
+                isGap < 1 ) | \
+                (abs(eta) > 1.479 & abs(eta) < 2.5 & abs(deltaEtaSuperClusterTrackAtVtx) < 0.005 & \
+                abs(deltaPhiSuperClusterTrackAtVtx) < 0.02 & \
+                scSigmaIEtaIEta < 0.03 & \
+                hadronicOverEm < 0.10  & \
+                abs(1/et - 1/pt ) < 0.05  & \
+                isGap < 1)"),
             numberRequired = cms.string("== 0"),
-            isVeto = cms.bool(True),
-            alias = cms.string("electron veto")
+            alias = cms.string("electron Id")
         ),
         # JET PT 
         cms.PSet (
