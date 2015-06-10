@@ -99,7 +99,7 @@ channels.append(ZZChannel)
 ##### Import the histograms to be plotted ######################################
 ################################################################################
 
-from AnaFwkTest.Selection.MyProtoHistogramDefinitions import *
+from AnaFwkTest.Selection.DibosonHistogramDefinitions import *
 
 ################################################################################
 ##### Attach the channels and histograms to the process ########################

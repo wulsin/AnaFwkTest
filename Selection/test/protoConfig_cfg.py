@@ -160,7 +160,7 @@ from AnaFwkTest.Selection.MyProtoEventSelections import *
 ##### Import the histograms to be plotted ######################################
 ################################################################################
 
-from AnaFwkTest.Selection.MyProtoHistogramDefinitions import *
+from AnaFwkTest.Selection.DibosonHistogramDefinitions import *
 from OSUT3Analysis.Configuration.histogramDefinitions import *
 
 ################################################################################
