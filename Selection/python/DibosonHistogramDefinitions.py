@@ -374,13 +374,13 @@ MyEventVarHistograms = cms.PSet(
         cms.PSet (
             name = cms.string("chargedMultiplicity0"),
             title = cms.string("charged multiplicity of jet 0; charged multiplicity of jet 0"), 
-            binsX = cms.untracked.vdouble(50, 0, 50),
+            binsX = cms.untracked.vdouble(40, 0, 120),
             inputVariables = cms.vstring("chargedMultiplicity0"),
         ),
         cms.PSet (
             name = cms.string("chargedMultiplicity1"),
             title = cms.string("charged multiplicity of jet 1; charged multiplicity of jet 1"), 
-            binsX = cms.untracked.vdouble(50, 0, 50),
+            binsX = cms.untracked.vdouble(40, 0, 120),
             inputVariables = cms.vstring("chargedMultiplicity1"),
         ),
     )
