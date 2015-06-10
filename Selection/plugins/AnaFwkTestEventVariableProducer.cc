@@ -35,16 +35,9 @@ AnaFwkTestEventVariableProducer::AddVariables (const edm::Event &event) {
     // Calculate mass of upper and lower jets.  
     double m1 = (*handles_.basicjets).at(0).mass();  
     double m2 = (*handles_.basicjets).at(1).mass();  
-    double mhi, mlo;  
-    if (m1 > m2) {
-      mhi = m1;
-      mlo = m2;
-    } else {
-      mhi = m2;
-      mlo = m1;
-    }  
-    (*eventvariables)["basicjetMassHi"] = mhi;  
-    (*eventvariables)["basicjetMassLo"] = mlo;  
+    // differentiate from basicjetMassMin, which is the mass of the two leading subjets  
+    (*eventvariables)["basicjetMassFuncCallMin"] = min<double> (m1, m2);   
+    (*eventvariables)["basicjetMassFuncCallMax"] = max<double> (m1, m2); 
 
     // Calculate number of charged consituents.  
     int nConst1 = 0;

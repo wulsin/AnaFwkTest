@@ -71,8 +71,8 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
   (*eventvariables)["maxSqrtY"] = max<double> (sqrtY0, sqrtY1);
   
   
-  (*eventvariables)["basicjetsInvMassSubjetsMin"] = min<double> (invMassSubjets0, invMassSubjets1);  
-  (*eventvariables)["basicjetsInvMassSubjetsMax"] = max<double> (invMassSubjets0, invMassSubjets1);  
+  (*eventvariables)["basicjetMassMin"] = min<double> (invMassSubjets0, invMassSubjets1);  
+  (*eventvariables)["basicjetMassMax"] = max<double> (invMassSubjets0, invMassSubjets1);  
 
   (*eventvariables)["chargedMultiplicity0"] = chargedMultiplicity0;  
   (*eventvariables)["chargedMultiplicity1"] = chargedMultiplicity1;  

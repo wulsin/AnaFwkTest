@@ -1,3 +1,75 @@
+##########################################################################
+##########################################################################
+##########################################################################
+##########################################################################
+##########################################################################
+##########################################################################
+##########################################################################
+##########################################################################
+##### THIS FILE IS FOR TESTING ONLY
+##### DO DEVELOPMENT INSTEAD IN DIBOSONSELECTIONS.PY
+##########################################################################
+##########################################################################
+##########################################################################
+##########################################################################
+##########################################################################
+##########################################################################
+##########################################################################
+##########################################################################
+##########################################################################
+##########################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import FWCore.ParameterSet.Config as cms
 import copy
 from AnaFwkTest.Selection.CommonUtils import *  
@@ -92,19 +164,12 @@ channelWZ = cms.PSet(
             cutString = cms.string("fabs(eta) < 2.0"),
             numberRequired = cms.string(">= 2"),
         ),
-        # REQUIRE EACH FAT JET TO HAVE AT LEAST 2 SUBJETS
-        cms.PSet (
-            inputCollection = cms.vstring("basicjets"),
-            cutString = cms.string("nConstituents >= 2"),
-            numberRequired = cms.string(">= 2"),
-        ),
-        # JET SQRT(Y)
-        cms.PSet (
-            inputCollection = cms.vstring("eventvariables"),
-            cutString = cms.string("minSqrtY > 0.45"), # if minSqrtY > 0.45, that means both
-                                                       # leading fat jets are above that cut
-            numberRequired = cms.string(">= 1"),
-        ),
+        # # REQUIRE EACH FAT JET TO HAVE AT LEAST 2 SUBJETS
+        # cms.PSet (
+        #     inputCollection = cms.vstring("basicjets"),
+        #     cutString = cms.string("nConstituents >= 2"),
+        #     numberRequired = cms.string(">= 2"),
+        # ),
         # JET RAPIDITY DIFFERENCE
         cms.PSet (
             inputCollection = cms.vstring("basicjets", "basicjets"),
@@ -129,16 +194,23 @@ channelWZ = cms.PSet(
             cutString = cms.string("basicjetRelPtDiff < 0.15"),
             numberRequired = cms.string(">= 1"),
         ),
+        # JET SQRT(Y)
+        cms.PSet (
+            inputCollection = cms.vstring("eventvariables"),
+            cutString = cms.string("minSqrtY > 0.45"), # if minSqrtY > 0.45, that means both
+                                                       # leading fat jets are above that cut
+            numberRequired = cms.string(">= 1"),
+        ),
         # WZ CHANNEL:  LARGER MASS CONSISTENT WITH Z
         cms.PSet (
             inputCollection = cms.vstring("eventvariables"),
-            cutString = cms.string("fabs ( basicjetsInvMassSubjetsMax - " + str(massZ) + " ) < 13"),   
+            cutString = cms.string("fabs ( basicjetMassMax - " + str(massZ) + " ) < 13"),   
             numberRequired = cms.string(">= 1"),
         ),
         # WZ CHANNEL:  SMALLER MASS CONSISTENT WITH W
         cms.PSet (
             inputCollection = cms.vstring("eventvariables"),
-            cutString = cms.string("fabs ( basicjetsInvMassSubjetsMin - " + str(massW) + " ) < 13"),   
+            cutString = cms.string("fabs ( basicjetMassMin - " + str(massW) + " ) < 13"),   
             numberRequired = cms.string(">= 1"),
         ),
         # JET-JET INVARIANT MASS 
