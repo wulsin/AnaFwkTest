@@ -48,7 +48,7 @@ process.maxEvents = cms.untracked.PSet (
 # this PSet specifies which collections to get from the input files
 collections = cms.PSet (
     bxlumis         =  cms.InputTag  (''),
-    electrons       =  cms.InputTag  ('gsfElectrons', ''),
+    electrons       =  cms.InputTag  ('gsfElectrons', '','RECO'),
     events          =  cms.InputTag  (''),
     genjets         =  cms.InputTag  (''),
 #    jets            =  cms.InputTag  ('ak5PFJets'),
@@ -60,6 +60,7 @@ collections = cms.PSet (
     muons           =  cms.InputTag  ('muons'),
     photons         =  cms.InputTag  ('photons'),
     primaryvertexs  =  cms.InputTag  ('offlinePrimaryVertices'),
+    beamspots       =  cms.InputTag  ('offlineBeamSpot',          '',      'RECO'),
     secMuons        =  cms.InputTag  ('muonsFromCosmics'),
     stops           =  cms.InputTag  (''),
     superclusters   =  cms.InputTag  (''),
