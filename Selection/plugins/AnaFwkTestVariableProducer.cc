@@ -8,6 +8,7 @@ AnaFwkTestVariableProducer::~AnaFwkTestVariableProducer() {}
 
 void
 AnaFwkTestVariableProducer::AddVariables (const edm::Event &event) {
+#if DATA_FORMAT == AOD
 
   // Add all of the needed collections to objectsToGet_
   objectsToGet_.insert ("mets");
@@ -41,6 +42,7 @@ AnaFwkTestVariableProducer::AddVariables (const edm::Event &event) {
     addUserVar("basicjetRelPtDiff", relPtDiff, (*handles_.basicjets).at(0), (*handles_.basicjets).at(1));  
   }
 
+#endif
 }  
 
 #include "FWCore/Framework/interface/MakerMacros.h"

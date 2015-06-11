@@ -8,6 +8,7 @@ AnaFwkTestEventVariableProducer::~AnaFwkTestEventVariableProducer() {}
 
 void
 AnaFwkTestEventVariableProducer::AddVariables (const edm::Event &event) {
+#if DATA_FORMAT == AOD
 
   // Add all of the needed collections to objectsToGet_
   objectsToGet_.insert ("mets");
@@ -59,6 +60,7 @@ AnaFwkTestEventVariableProducer::AddVariables (const edm::Event &event) {
 
   //  cout << "Debug:  added event variable:  metPt = " <<  (*eventvariables)["metPt"] << endl;  
 
+#endif
 }  
 
 #include "FWCore/Framework/interface/MakerMacros.h"

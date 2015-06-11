@@ -11,6 +11,7 @@ AnaFwkTestSubjetVariableProducer::~AnaFwkTestSubjetVariableProducer() {}
 
 void
 AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
+#if DATA_FORMAT == AOD
 
   // Add all of the needed collections to objectsToGet_
   objectsToGet_.insert ("basicjets");
@@ -77,12 +78,17 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
   (*eventvariables)["chargedMultiplicity0"] = chargedMultiplicity0;  
   (*eventvariables)["chargedMultiplicity1"] = chargedMultiplicity1;  
 
+#endif
 }  
 
 double
 AnaFwkTestSubjetVariableProducer::jetMass (const reco::BasicJet &jet) const
 {
+#if DATA_FORMAT == AOD
   return (jet.getJetConstituents ().at (0)->p4 () + jet.getJetConstituents ().at (1)->p4 ()).M ();
+#else
+  return -1.0;
+#endif
 }
 
 #include "FWCore/Framework/interface/MakerMacros.h"
