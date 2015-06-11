@@ -1,4 +1,4 @@
-#include "DibosonAnalysis/Producers/plugins/LeadingFat.h"
+#include "AnaFwkTest/Producers/plugins/LeadingFat.h"
 
 LeadingFat::LeadingFat (const edm::ParameterSet &cfg) :
   fats_ (cfg.getParameter<edm::InputTag> ("fats"))
