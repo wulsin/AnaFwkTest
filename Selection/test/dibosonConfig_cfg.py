@@ -25,8 +25,8 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 100
 
 
 # sample ROOT file
-#set_input(process, "/home/hart/diboson/CMSSW_5_3_28_patch1/src/subjetFilter.root")  
-set_input(process, "root://cmsxrootd.fnal.gov//store/user/ahart/JetHT/SubjetFilter-v1/150605_174426/0000/subjetFilter_new_1.root")
+set_input(process, "/home/hart/diboson/CMSSW_5_3_28_patch1/src/subjetFilter.root")  
+#set_input(process, "root://cmsxrootd.fnal.gov//store/user/ahart/JetHT/SubjetFilter-v1/150605_174426/0000/subjetFilter_new_1.root")
 
 # sample dataset nickname
 #set_input(process, "DYToTauTau_20")
@@ -54,10 +54,8 @@ collections = cms.PSet (
     electrons       =  cms.InputTag  ('gsfElectrons', ''),
     events          =  cms.InputTag  (''),
     genjets         =  cms.InputTag  (''),
-#    jets            =  cms.InputTag  ('ak5PFJets'),
-    jets            =  cms.InputTag  ('caSubjetFilterPFJets', ""),
-#    basicjets       =  cms.InputTag  ('caSubjetFilterPFJets', "fat"),
-    basicjets       =  cms.InputTag  ('leadingFat', "leadingFat"),
+    jets            =  cms.InputTag  ('caSubjetFilterPFJets', 'sub'),  # subjets 
+    basicjets       =  cms.InputTag  ('leadingFat', "leadingFat"),     # leading 2 fat jets
     mcparticles     =  cms.InputTag  (''),
     mets            =  cms.InputTag  ('pfMet', ''),
     muons           =  cms.InputTag  ('muons'),
@@ -89,11 +87,11 @@ from AnaFwkTest.Selection.MyProtoEventSelections import *
 
 channels = []
 channels.append(skimChannel)
-channels.append(preselectionChannel)
-channels.append(lowMassChannel)
-channels.append(WWChannel)
-channels.append(WZChannel)
-channels.append(ZZChannel)
+# channels.append(preselectionChannel)
+# channels.append(lowMassChannel)
+# channels.append(WWChannel)
+# channels.append(WZChannel)
+# channels.append(ZZChannel)
 
 ################################################################################
 ##### Import the histograms to be plotted ######################################

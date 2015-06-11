@@ -110,6 +110,13 @@ jetExtraJetVeto = cms.PSet (
     alias = cms.string("extra jet veto")
 )
 
+jetNConstituentsCut = cms.PSet (
+    inputCollection = cms.vstring("basicjets"),
+    cutString = cms.string("nConstituents >= 2"),
+    numberRequired = cms.string(">= 2"),
+)
+
+
 jet1MinTrksCut = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
     cutString = cms.string("basicjetNConstChgd1 > 0"),
@@ -124,13 +131,13 @@ jet2MinTrksCut = cms.PSet (
 
 jet1MaxTrksCut = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
-    cutString = cms.string("basicjetNConstChgd1 < 30"),
+    cutString = cms.string("chargedMultiplicity0 < 30"),
     numberRequired = cms.string(">= 1"),
 )
 
 jet2MaxTrksCut = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
-    cutString = cms.string("basicjetNConstChgd2 < 30"),
+    cutString = cms.string("chargedMultiplicity1 < 30"),
     numberRequired = cms.string(">= 1"),
 )
 
@@ -179,17 +186,16 @@ skimSelection.append(electronVeto)
 
 skimSelection.append(jetPtCut)
 skimSelection.append(jetEtaCut)
-#skimSelection.append(jet1MinTrksCut)
-#skimSelection.append(jet2MinTrksCut)
 skimSelection.append(jetExtraJetVeto)
+#skimSelection.append(jetNConstituentsCut)  
 
 ##########################################################################
 
 jetSelection = cms.VPSet ()
 #jetSelection.append(jet1MinTrksCut)
 #jetSelection.append(jet2MinTrksCut)
-#jetSelection.append(jet1MaxTrksCut)
-#jetSelection.append(jet2MaxTrksCut)
+jetSelection.append(jet1MaxTrksCut)
+jetSelection.append(jet2MaxTrksCut)
 
 ##########################################################################
 
@@ -203,7 +209,7 @@ dijetSelection.append(dijetSqrtYCut)
 
 preselection = cms.VPSet ()
 preselection += skimSelection
-#preselection += jetSelection
+preselection += jetSelection
 preselection += dijetSelection
 
 ##########################################################################

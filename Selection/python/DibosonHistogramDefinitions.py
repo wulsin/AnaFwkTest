@@ -287,8 +287,21 @@ MyBasicJetHistograms = cms.PSet(
         ),
         cms.PSet (
             name = cms.string("nConstituents"),
-            title = cms.string("Number of subjets; Number of subjets"), 
-            binsX = cms.untracked.vdouble(30, 0, 30),
+            title = cms.string("nConstituents; nConstituents"), 
+            binsX = cms.untracked.vdouble(31, -0.5, 30.5),
+            inputVariables = cms.vstring("nConstituents"),
+        ),
+        # cms.PSet (
+        #     name = cms.string("getJetConstituentsSize"),
+        #     title = cms.string("getJetConstituentsSize;getJetConstituentsSize"), 
+        #     binsX = cms.untracked.vdouble(31, -0.5, 30.5),
+        #     inputVariables = cms.vstring("getJetConstituents.size"),  # FIXME:  produces error:  
+        #     # WARNING: "getJetConstituents.size" has unrecognized type "unsigned long int" 
+        # ),
+        cms.PSet (
+            name = cms.string("nConstituents"),
+            title = cms.string("nConstituents; nConstituents"), 
+            binsX = cms.untracked.vdouble(31, -0.5, 30.5),
             inputVariables = cms.vstring("nConstituents"),
         ),
         cms.PSet (
@@ -374,14 +387,38 @@ MyEventVarHistograms = cms.PSet(
         cms.PSet (
             name = cms.string("chargedMultiplicity0"),
             title = cms.string("charged multiplicity of jet 0; charged multiplicity of jet 0"), 
-            binsX = cms.untracked.vdouble(50, 0, 50),
+            binsX = cms.untracked.vdouble(40, 0, 120),
             inputVariables = cms.vstring("chargedMultiplicity0"),
         ),
         cms.PSet (
             name = cms.string("chargedMultiplicity1"),
             title = cms.string("charged multiplicity of jet 1; charged multiplicity of jet 1"), 
-            binsX = cms.untracked.vdouble(50, 0, 50),
+            binsX = cms.untracked.vdouble(40, 0, 120),
             inputVariables = cms.vstring("chargedMultiplicity1"),
+        ),
+        cms.PSet (
+            name = cms.string("getJetConstituentsSize0"),
+            title = cms.string("getJetConstituentsSize0;getJetConstituentsSize0"),
+            binsX = cms.untracked.vdouble(50, 0, 50), 
+            inputVariables = cms.vstring("getJetConstituentsSize0"),
+        ),
+        cms.PSet (
+            name = cms.string("getJetConstituentsSize1"),
+            title = cms.string("getJetConstituentsSize1;getJetConstituentsSize1"),
+            binsX = cms.untracked.vdouble(50, 0, 50), 
+            inputVariables = cms.vstring("getJetConstituentsSize1"),
+        ),
+        cms.PSet (
+            name = cms.string("nConstituentsByHand0"),
+            title = cms.string("nConstituentsByHand0;nConstituentsByHand0"),
+            binsX = cms.untracked.vdouble(50, 0, 50), 
+            inputVariables = cms.vstring("nConstituentsByHand0"),
+        ),
+        cms.PSet (
+            name = cms.string("nConstituentsByHand1"),
+            title = cms.string("nConstituentsByHand1;nConstituentsByHand1"),
+            binsX = cms.untracked.vdouble(50, 0, 50), 
+            inputVariables = cms.vstring("nConstituentsByHand1"),
         ),
     )
 )
