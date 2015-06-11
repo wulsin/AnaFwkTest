@@ -30,12 +30,24 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
   //  cout << (*handles_.basicjets).at(0).subjets()).at(0).pt() << endl;
   //  cout << (*handles_.basicjets).at(0).getJetConstituents().at(0)->pt() << endl;
 
+  int getJetConstituentsSize0 = -9;  
+  int getJetConstituentsSize1 = -9;  
+  int nConstituentsByHand0    = -9;  
+  int nConstituentsByHand1    = -9;  
+
+
   double sqrtY0 = 0.0, sqrtY1 = 0.0;
   double invMassSubjets0 = 0.0, invMassSubjets1 = 0.0;  
   int chargedMultiplicity0 = -9, chargedMultiplicity1 = -9;  
   if ((*handles_.basicjets).size() != 2) {
     cout << "ERROR:  number of basic jets should be exactly 2!  " << endl;
   } else {
+    getJetConstituentsSize0  = handles_.basicjets->at(0).getJetConstituents().size();  
+    getJetConstituentsSize1  = handles_.basicjets->at(1).getJetConstituents().size();  
+    nConstituentsByHand0     = handles_.basicjets->at(0).nConstituents();  
+    nConstituentsByHand1     = handles_.basicjets->at(1).nConstituents(); 
+
+
     if (handles_.basicjets->at (0).nConstituents () > 1)
       {
         pair<TLorentzVector, TLorentzVector> p;
@@ -85,6 +97,12 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
 
   (*eventvariables)["chargedMultiplicity0"] = chargedMultiplicity0;  
   (*eventvariables)["chargedMultiplicity1"] = chargedMultiplicity1;  
+
+
+  (*eventvariables)["getJetConstituentsSize0"]  = getJetConstituentsSize0;
+  (*eventvariables)["getJetConstituentsSize1"]  = getJetConstituentsSize1;
+  (*eventvariables)["nConstituentsByHand0"]     = nConstituentsByHand0;
+  (*eventvariables)["nConstituentsByHand1"]     = nConstituentsByHand1;
 
 }  
 

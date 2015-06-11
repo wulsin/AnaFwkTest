@@ -110,6 +110,13 @@ jetExtraJetVeto = cms.PSet (
     alias = cms.string("extra jet veto")
 )
 
+jetNConstituentsCut = cms.PSet (
+    inputCollection = cms.vstring("basicjets"),
+    cutString = cms.string("nConstituents >= 2"),
+    numberRequired = cms.string(">= 2"),
+)
+
+
 jet1MinTrksCut = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
     cutString = cms.string("basicjetNConstChgd1 > 0"),
@@ -180,6 +187,7 @@ skimSelection.append(electronVeto)
 skimSelection.append(jetPtCut)
 skimSelection.append(jetEtaCut)
 skimSelection.append(jetExtraJetVeto)
+#skimSelection.append(jetNConstituentsCut)  
 
 ##########################################################################
 

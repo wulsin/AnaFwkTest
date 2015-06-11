@@ -87,11 +87,11 @@ from AnaFwkTest.Selection.MyProtoEventSelections import *
 
 channels = []
 channels.append(skimChannel)
-channels.append(preselectionChannel)
-channels.append(lowMassChannel)
-channels.append(WWChannel)
-channels.append(WZChannel)
-channels.append(ZZChannel)
+# channels.append(preselectionChannel)
+# channels.append(lowMassChannel)
+# channels.append(WWChannel)
+# channels.append(WZChannel)
+# channels.append(ZZChannel)
 
 ################################################################################
 ##### Import the histograms to be plotted ######################################
