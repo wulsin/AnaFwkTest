@@ -75,7 +75,7 @@ collections = cms.PSet (
 ################################################################################
 
 variableProducers = []
-variableProducers.append("AnaFwkTestEventVariableProducer")
+#variableProducers.append("AnaFwkTestEventVariableProducer")
 variableProducers.append("AnaFwkTestSubjetVariableProducer")
 
 ################################################################################
@@ -90,7 +90,7 @@ channels.append(skimChannel)
 # channels.append(preselectionChannel)
 # channels.append(lowMassChannel)
 # channels.append(WWChannel)
-# channels.append(WZChannel)
+channels.append(WZChannel)
 # channels.append(ZZChannel)
 
 ################################################################################
@@ -103,7 +103,7 @@ from AnaFwkTest.Selection.DibosonHistogramDefinitions import *
 ##### Attach the channels and histograms to the process ########################
 ################################################################################
 
-add_channels (process, channels, cms.VPSet (MyBasicJetHistograms, MyMetHistograms, BasicjetBasicjetHistograms, MyEventVarHistograms), collections, variableProducers, False)
+add_channels (process, channels, cms.VPSet (MyBasicJetHistograms, MyMetHistograms, BasicjetBasicjetHistograms, MyEventVarHistograms), collections, variableProducers, True)
 
 # uncomment to produce a full python configuration log file
 outfile = open('dumpedConfig.py','w'); print >> outfile,process.dumpPython(); outfile.close()

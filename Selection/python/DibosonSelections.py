@@ -44,13 +44,13 @@ lowMassChannel = cms.PSet(
 
 jetLeadingLowMassCut = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
-    cutString = cms.string("fabs ( basicjetMassMax - 50 ) < 10"),
+    cutString = cms.string("fabs ( fatjetMassMax - 50 ) < 10"),
     numberRequired = cms.string(">= 1"),
 )
 
 jetSubleadingLowMassCut = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
-    cutString = cms.string("fabs ( basicjetMassMin - 50 ) < 10"),
+    cutString = cms.string("fabs ( fatjetMassMin - 50 ) < 10"),
     numberRequired = cms.string(">= 1"),
 )
 
@@ -71,12 +71,12 @@ WZChannel = cms.PSet(
 
 jetZMassCut_WZ = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
-    cutString = cms.string("fabs ( basicjetMassMax - " + str(massZ) + " ) < 13"),
+    cutString = cms.string("fabs ( fatjetMassMax - " + str(massZ) + " ) < 13"),
     numberRequired = cms.string(">= 1"),
 )
 jetWMassCut_WZ = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
-    cutString = cms.string("fabs ( basicjetMassMin - " + str(massW) + " ) < 13"),
+    cutString = cms.string("fabs ( fatjetMassMin - " + str(massW) + " ) < 13"),
     numberRequired = cms.string(">= 1"),
 )
 
@@ -97,12 +97,12 @@ WWChannel = cms.PSet(
 
 jetZMassCut_WW = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
-    cutString = cms.string("fabs ( basicjetMassMax - " + str(massW) + " ) < 13"),
+    cutString = cms.string("fabs ( fatjetMassMax - " + str(massW) + " ) < 13"),
     numberRequired = cms.string(">= 1"),
 )
 jetWMassCut_WW = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
-    cutString = cms.string("fabs ( basicjetMassMin - " + str(massW) + " ) < 13"),
+    cutString = cms.string("fabs ( fatjetMassMin - " + str(massW) + " ) < 13"),
     numberRequired = cms.string(">= 1"),
 )
 
@@ -123,12 +123,12 @@ ZZChannel = cms.PSet(
 
 jetZMassCut_ZZ = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
-    cutString = cms.string("fabs ( basicjetMassMax - " + str(massZ) + " ) < 13"),
+    cutString = cms.string("fabs ( fatjetMassMax - " + str(massZ) + " ) < 13"),
     numberRequired = cms.string(">= 1"),
 )
 jetWMassCut_ZZ = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
-    cutString = cms.string("fabs ( basicjetMassMin - " + str(massZ) + " ) < 13"),
+    cutString = cms.string("fabs ( fatjetMassMin - " + str(massZ) + " ) < 13"),
     numberRequired = cms.string(">= 1"),
 )
 

@@ -21,29 +21,34 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
   // Add all of the needed collections to objectsToGet_
   objectsToGet_.insert ("basicjets");  // these are the "fat jets"
   objectsToGet_.insert ("jets");       // these are the subjets  
+  objectsToGet_.insert ("mets");     
 
   // get all the needed collections from the event and put them into the "handles_" collection
   anatools::getRequiredCollections (objectsToGet_, collections_, handles_, event);
 
   // calculate whatever variables you'd like
 
-
-  //  cout << (*handles_.basicjets).at(0).subjets()).at(0).pt() << endl;
-  //  cout << (*handles_.basicjets).at(0).getJetConstituents().at(0)->pt() << endl;
+  (*eventvariables)["metPt"] = (*handles_.mets).at(0).pt();
 
   int getJetConstituentsSizeLeading = -9;  
   int getJetConstituentsSizeSubleading = -9;  
   int nConstituentsByHandLeading       = -9;  
   int nConstituentsByHandSubleading    = -9;  
 
+  // kinematics of leading and subleading fatjets 
+  // these quantities are calculated based on the subjets  
+  // "leading" and "subleading" refer to the pt of the jets, not their mass  
+
+  int chargedMultiplicityLeading = -99;
+  int chargedMultiplicitySubleading = -99;  
 
   double sqrtY0 = 0.0, sqrtY1 = 0.0;
-  double invMassSubjets0 = 0.0, invMassSubjets1 = 0.0;  
-  int chargedMultiplicityLeading = -9, chargedMultiplicitySubleading = -9;  
+  TLorentzVector fatjetLeading, fatjetSubleading;  
+
   if ((*handles_.basicjets).size() != 2) {
     cout << "ERROR:  number of basic jets should be exactly 2!  " << endl;
   } else {
-    getJetConstituentsSizeLeading  = handles_.basicjets->at(0).getJetConstituents().size();  
+    getJetConstituentsSizeLeading     = handles_.basicjets->at(0).getJetConstituents().size();  
     getJetConstituentsSizeSubleading  = handles_.basicjets->at(1).getJetConstituents().size();  
     nConstituentsByHandLeading        = handles_.basicjets->at(0).nConstituents();  
     nConstituentsByHandSubleading     = handles_.basicjets->at(1).nConstituents(); 
@@ -60,12 +65,15 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
                                handles_.basicjets->at (0).getJetConstituents ().at (1)->eta (),
                                handles_.basicjets->at (0).getJetConstituents ().at (1)->phi (),
                                handles_.basicjets->at (0).getJetConstituents ().at (1)->energy ());
-	invMassSubjets0 = jetMass (handles_.basicjets->at (0)); 
-        sqrtY0 = min<double> (p.first.Pt (), p.second.Pt ()) * (p.first.DeltaR (p.second) / jetMass (handles_.basicjets->at (0)));
+	// FIXME:  Eventually, the 4-momentum of the fat jet should be set equal to the 
+	// sum of the 4-momenta of the 3 filterjets, not the 2 subjets.  
+	fatjetLeading = p.first + p.second;  // 4-momentum of two subjets combined
+
+        sqrtY0 = min<double> (p.first.Pt (), p.second.Pt ()) * (p.first.DeltaR (p.second) / fatjetLeading.M());  
 	const reco::PFJet* subjet0 = findSubjet(handles_.jets, handles_.basicjets->at(0).getJetConstituents ().at(0)); 
 	const reco::PFJet* subjet1 = findSubjet(handles_.jets, handles_.basicjets->at(0).getJetConstituents ().at(1)); 
 	if (subjet0 && subjet1) {
-	  chargedMultiplicityLeading = subjet0->chargedMultiplicity() + subjet1->chargedMultiplicity();  
+	  chargedMultiplicityLeading = subjet0->chargedMultiplicity() + subjet1->chargedMultiplicity();  // FIXME:  calculate chargedMultiplicity from the original ungroomed jet, not from the subjets  
 	}
       }
     if (handles_.basicjets->at (1).nConstituents () > 1)
@@ -79,8 +87,8 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
                                handles_.basicjets->at (1).getJetConstituents ().at (1)->eta (),
                                handles_.basicjets->at (1).getJetConstituents ().at (1)->phi (),
                                handles_.basicjets->at (1).getJetConstituents ().at (1)->energy ());
-	invMassSubjets1 = jetMass (handles_.basicjets->at (1)); 
-	sqrtY1 = min<double> (p.first.Pt (), p.second.Pt ()) * (p.first.DeltaR (p.second) / jetMass (handles_.basicjets->at (1)));
+	fatjetSubleading = p.first + p.second;  // 4-momentum of two subjets combined
+	sqrtY1 = min<double> (p.first.Pt (), p.second.Pt ()) * (p.first.DeltaR (p.second) / fatjetSubleading.M());  
 	const reco::PFJet* subjet0 = findSubjet(handles_.jets, handles_.basicjets->at(1).getJetConstituents ().at(0)); 
 	const reco::PFJet* subjet1 = findSubjet(handles_.jets, handles_.basicjets->at(1).getJetConstituents ().at(1)); 
 	if (subjet0 && subjet1) {
@@ -89,20 +97,36 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
       }
   }
   
+
+  (*eventvariables)["mLeading"] =                   fatjetLeading.M();   		 
+  (*eventvariables)["mSubleading"] =   	            fatjetSubleading.M();		 
+  (*eventvariables)["ptLeading"] =                  fatjetLeading.Pt();   		 
+  (*eventvariables)["ptSubleading"] =   	    fatjetSubleading.Pt();		 
+  (*eventvariables)["etaLeading"] =   		    fatjetLeading.Eta();   		 
+  (*eventvariables)["etaSubleading"] =   	    fatjetSubleading.Eta();		 
+  (*eventvariables)["phiLeading"] =   		    fatjetLeading.Phi();   		 
+  (*eventvariables)["phiSubleading"] =   	    fatjetSubleading.Phi();		 
+  (*eventvariables)["energyLeading"] =   	    fatjetLeading.E();   	 
+  (*eventvariables)["energySubleading"] =   	    fatjetSubleading.E();	 
+  (*eventvariables)["invMassLeadingSubleading"] =   (fatjetLeading + fatjetSubleading).M();  
+  (*eventvariables)["rapidityDiff"]               = fatjetLeading.Rapidity() - fatjetSubleading.Rapidity();  
+
+  double pt0 = fatjetLeading.Pt();
+  double pt1 = fatjetSubleading.Pt();  
+  (*eventvariables)["fatjetRelPtDiff"]            = (pt0 - pt1) / (pt0 + pt1); 
+
   (*eventvariables)["minSqrtY"] = min<double> (sqrtY0, sqrtY1);
   (*eventvariables)["maxSqrtY"] = max<double> (sqrtY0, sqrtY1);
-  
-  
-  (*eventvariables)["basicjetMassMin"] = min<double> (invMassSubjets0, invMassSubjets1);  
-  (*eventvariables)["basicjetMassMax"] = max<double> (invMassSubjets0, invMassSubjets1);  
+    
+  (*eventvariables)["fatjetMassMin"] = min<double> (fatjetLeading.M(), fatjetSubleading.M());  
+  (*eventvariables)["fatjetMassMax"] = max<double> (fatjetLeading.M(), fatjetSubleading.M());  
 
-  (*eventvariables)["chargedMultiplicityLeading"] = chargedMultiplicityLeading;  
+  (*eventvariables)["chargedMultiplicityLeading"]    = chargedMultiplicityLeading;  
   (*eventvariables)["chargedMultiplicitySubleading"] = chargedMultiplicitySubleading;  
 
-
-  (*eventvariables)["getJetConstituentsSizeLeading"]  = getJetConstituentsSizeLeading;
+  (*eventvariables)["getJetConstituentsSizeLeading"]     = getJetConstituentsSizeLeading;
   (*eventvariables)["getJetConstituentsSizeSubleading"]  = getJetConstituentsSizeSubleading;
-  (*eventvariables)["nConstituentsByHandLeading"]     = nConstituentsByHandLeading;
+  (*eventvariables)["nConstituentsByHandLeading"]        = nConstituentsByHandLeading;
   (*eventvariables)["nConstituentsByHandSubleading"]     = nConstituentsByHandSubleading;
 
 #endif

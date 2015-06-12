@@ -91,22 +91,34 @@ electronVeto =  cms.PSet (
 
 # JET CUTS
 
-jetPtCut = cms.PSet (
-    inputCollection = cms.vstring("basicjets"),
-    cutString = cms.string("pt > 20"),
-    numberRequired = cms.string(">= 2")
+jetLeadingPtCut = cms.PSet (
+    inputCollection = cms.vstring("eventvariables"),
+    cutString = cms.string("ptLeading > 20"),
+    numberRequired = cms.string(">= 1")
 )
 
-jetEtaCut = cms.PSet (
-    inputCollection = cms.vstring("basicjets"),
-    cutString = cms.string("fabs(eta) < 2.0"),
-    numberRequired = cms.string(">= 2"),
+jetSubleadingPtCut = cms.PSet (
+    inputCollection = cms.vstring("eventvariables"),
+    cutString = cms.string("ptSubleading > 20"),
+    numberRequired = cms.string(">= 1")
+)
+
+jetLeadingEtaCut = cms.PSet (
+    inputCollection = cms.vstring("eventvariables"),
+    cutString = cms.string("fabs(etaLeading) < 2.0"),
+    numberRequired = cms.string(">= 1")
+)
+
+jetSubleadingEtaCut = cms.PSet (
+    inputCollection = cms.vstring("eventvariables"),
+    cutString = cms.string("fabs(etaSubleading) < 2.0"),
+    numberRequired = cms.string(">= 1")
 )
 
 jetExtraJetVeto = cms.PSet (
     inputCollection = cms.vstring("basicjets"),
     cutString = cms.string("pt > -1"),
-    numberRequired = cms.string("== 2"),
+    numberRequired = cms.string("<= 2"),
     alias = cms.string("extra jet veto")
 )
 
@@ -115,7 +127,6 @@ jetNConstituentsCut = cms.PSet (
     cutString = cms.string("nConstituents >= 2"),
     numberRequired = cms.string(">= 2"),
 )
-
 
 jetLeadingMinTrksCut = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
@@ -146,14 +157,14 @@ jetSubleadingMaxTrksCut = cms.PSet (
 # DIJET CUTS
 
 dijetDeltaYCut = cms.PSet (
-    inputCollection = cms.vstring("basicjets", "basicjets"),
-    cutString = cms.string("fabs ( basicjet.rapidity - basicjet.rapidity ) < 1.2"),
-    numberRequired = cms.string("== 1"),
+    inputCollection = cms.vstring("eventvariables"),
+    cutString = cms.string("fabs ( rapidityDiff ) < 1.2"),
+    numberRequired = cms.string(">= 1"),
 )
 
 dijetPtBalanceCut = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
-    cutString = cms.string("basicjetRelPtDiff < 0.15"),
+    cutString = cms.string("fatjetRelPtDiff < 0.15"),
     numberRequired = cms.string(">= 1"),
 )
 
@@ -164,9 +175,9 @@ dijetSqrtYCut = cms.PSet (
 )
 
 dijetMassCut = cms.PSet (
-    inputCollection = cms.vstring("basicjets", "basicjets"),
-    cutString = cms.string("invMass (basicjet, basicjet) > 500"),   # 500 GeV for testing, official is 1.05 TeV
-    numberRequired = cms.string("== 1"),
+    inputCollection = cms.vstring("eventvariables"),  
+    cutString = cms.string("invMassLeadingSubleading > 500"),   # 500 GeV for testing, official is 1.05 TeV
+    numberRequired = cms.string(">= 1"),
 )
 
 
@@ -184,8 +195,10 @@ skimSelection.append(electronD0Cut)
 skimSelection.append(electronIDCut)
 skimSelection.append(electronVeto)
 
-skimSelection.append(jetPtCut)
-skimSelection.append(jetEtaCut)
+skimSelection.append(jetLeadingPtCut)
+skimSelection.append(jetSubleadingPtCut)
+skimSelection.append(jetLeadingEtaCut)
+skimSelection.append(jetSubleadingEtaCut)
 skimSelection.append(jetExtraJetVeto)
 skimSelection.append(jetNConstituentsCut)  
 

@@ -66,7 +66,8 @@ MyElectronHistograms = cms.PSet(
     )
 )
 
-
+# FIXME:  We probably should not even include the basicjet histograms,
+# since they may be misleading.  
 BasicjetBasicjetHistograms = cms.PSet(
     inputCollection = cms.vstring("basicjets", "basicjets"),
     histograms = cms.VPSet (
@@ -285,12 +286,6 @@ MyBasicJetHistograms = cms.PSet(
             binsX = cms.untracked.vdouble(100, -100, 100),
             inputVariables = cms.vstring("mass - " + str(massZ)),
         ),
-        cms.PSet (
-            name = cms.string("nConstituents"),
-            title = cms.string("nConstituents; nConstituents"), 
-            binsX = cms.untracked.vdouble(31, -0.5, 30.5),
-            inputVariables = cms.vstring("nConstituents"),
-        ),
         # cms.PSet (
         #     name = cms.string("getJetConstituentsSize"),
         #     title = cms.string("getJetConstituentsSize;getJetConstituentsSize"), 
@@ -325,64 +320,70 @@ MyEventVarHistograms = cms.PSet(
     inputCollection = cms.vstring("eventvariables"),
     histograms = cms.VPSet (
         cms.PSet (
-            name = cms.string("basicjetRelPtDiff"),
-            title = cms.string("Relative p_{T} difference of leading jets; (p_{T1} - p_{T2}) / (p_{T1} + p_{T2})"),
-            binsX = cms.untracked.vdouble(100, -1, 1),
-            inputVariables = cms.vstring("basicjetRelPtDiff"),
+            name = cms.string("ptLeading"),
+            title = cms.string("p_{T} of leading jet; p_{T} of leading jet [GeV]"), 
+            binsX = cms.untracked.vdouble(100, 0, 500),
+            inputVariables = cms.vstring("ptLeading"),
         ),
         cms.PSet (
-            name = cms.string("userVarMetPt"),
+            name = cms.string("ptSubleading"),
+            title = cms.string("p_{T} of subleading jet; p_{T} of subleading jet [GeV]"), 
+            binsX = cms.untracked.vdouble(100, 0, 500),
+            inputVariables = cms.vstring("ptSubleading"),
+        ),
+        cms.PSet (
+            name = cms.string("etaLeading"),
+            title = cms.string("#eta of leading jet; #eta of leading jet"), 
+            binsX = cms.untracked.vdouble(100, -5, 5), 
+            inputVariables = cms.vstring("etaLeading"),
+        ),
+        cms.PSet (
+            name = cms.string("etaSubleading"),
+            title = cms.string("#eta of subleading jet; #eta of subleading jet"), 
+            binsX = cms.untracked.vdouble(100, -5, 5), 
+            inputVariables = cms.vstring("etaSubleading"),
+        ),
+        cms.PSet (
+            name = cms.string("rapidityDiff"),
+            title = cms.string("rapidity difference of 2 fatjets;jet |y_{1} - y_{2}|"),
+            binsX = cms.untracked.vdouble(100, 0, 5), 
+            inputVariables = cms.vstring("rapidityDiff"),
+        ),
+        cms.PSet (
+            name = cms.string("fatjetRelPtDiff"),
+            title = cms.string("Relative p_{T} difference of leading jets; (p_{T1} - p_{T2}) / (p_{T1} + p_{T2})"),
+            binsX = cms.untracked.vdouble(100, -1, 1),
+            inputVariables = cms.vstring("fatjetRelPtDiff"),
+        ),
+        cms.PSet (
+            name = cms.string("minSqrtY"),
+            title = cms.string("minimum #sqrt{y}; minimum #sqrt{y}"),
+            binsX = cms.untracked.vdouble(100, 0, 2),
+            inputVariables = cms.vstring("minSqrtY"),
+        ),
+        cms.PSet (
+            name = cms.string("maxSqrtY"),
+            title = cms.string("maximum #sqrt{y}; maximum #sqrt{y}"),
+            binsX = cms.untracked.vdouble(100, 0, 2),
+            inputVariables = cms.vstring("maxSqrtY"),
+        ),
+        cms.PSet (
+            name = cms.string("eventVarMetPt"),
             title = cms.string("Met pt; MET"), 
             binsX = cms.untracked.vdouble(100, 0, 500),
             inputVariables = cms.vstring("metPt"),
         ),
         cms.PSet (
-            name = cms.string("basicjetMassMin"),
+            name = cms.string("fatjetMassMin"),
             title = cms.string("mass of lower-mass jet; jet mass [GeV]"), 
             binsX = cms.untracked.vdouble(100, 0, 500),
-            inputVariables = cms.vstring("basicjetMassMin"),
+            inputVariables = cms.vstring("fatjetMassMin"),
         ),
         cms.PSet (
-            name = cms.string("basicjetMassMax"),
+            name = cms.string("fatjetMassMax"),
             title = cms.string("mass of higher-mass jet; jet mass [GeV]"), 
             binsX = cms.untracked.vdouble(100, 0, 500),
-            inputVariables = cms.vstring("basicjetMassMax"),
-        ),
-        cms.PSet (
-            name = cms.string("basicjetMassFuncCallMin"),
-            title = cms.string("mass function call of lower-mass jet; jet mass [GeV]"), 
-            binsX = cms.untracked.vdouble(100, 0, 500),
-            inputVariables = cms.vstring("basicjetMassFuncCallMin"),
-        ),
-        cms.PSet (
-            name = cms.string("basicjetMassFuncCallMax"),
-            title = cms.string("mass function call of higher-mass jet; jet mass [GeV]"), 
-            binsX = cms.untracked.vdouble(100, 0, 500),
-            inputVariables = cms.vstring("basicjetMassFuncCallMax"),
-        ),
-        cms.PSet (
-            name = cms.string("basicjetMassDiffMin"),
-            title = cms.string("mass difference for lower-mass jet; (m_{function} - m_{constituents}) / m_{function}"), 
-            binsX = cms.untracked.vdouble(100, -1, 1),
-            inputVariables = cms.vstring("( basicjetMassFuncCallMin - basicjetMassMin ) / basicjetMassFuncCallMin"),
-        ),
-        cms.PSet (
-            name = cms.string("basicjetMassDiffMax"),
-            title = cms.string("mass difference for higher-mass jet; (m_{function} - m_{constituents}) / m_{function}"), 
-            binsX = cms.untracked.vdouble(100, -1, 1),
-            inputVariables = cms.vstring("( basicjetMassFuncCallMax - basicjetMassMax ) / basicjetMassFuncCallMax"),
-        ),
-        cms.PSet (
-            name = cms.string("basicjetNConstChgdLeading"),
-            title = cms.string("number of charged constituents of leading jet; number of charged constituents of leading jet"), 
-            binsX = cms.untracked.vdouble(50, 0, 50),
-            inputVariables = cms.vstring("basicjetNConstChgdLeading"),
-        ),
-        cms.PSet (
-            name = cms.string("basicjetNConstSubleading"),
-            title = cms.string("number of constituents of jet Subleading; number of constituents of jet Subleading"), 
-            binsX = cms.untracked.vdouble(50, 0, 50),
-            inputVariables = cms.vstring("basicjetNConstSubleading"),
+            inputVariables = cms.vstring("fatjetMassMax"),
         ),
         cms.PSet (
             name = cms.string("chargedMultiplicityLeading"),
@@ -408,18 +409,18 @@ MyEventVarHistograms = cms.PSet(
             binsX = cms.untracked.vdouble(50, 0, 50), 
             inputVariables = cms.vstring("getJetConstituentsSizeSubleading"),
         ),
-        cms.PSet (
-            name = cms.string("nConstituentsByHandLeading"),
-            title = cms.string("nConstituentsByHandLeading;nConstituentsByHandLeading"),
-            binsX = cms.untracked.vdouble(50, 0, 50), 
-            inputVariables = cms.vstring("nConstituentsByHandLeading"),
-        ),
-        cms.PSet (
-            name = cms.string("nConstituentsByHandSubleading"),
-            title = cms.string("nConstituentsByHandSubleading;nConstituentsByHandSubleading"),
-            binsX = cms.untracked.vdouble(50, 0, 50), 
-            inputVariables = cms.vstring("nConstituentsByHandSubleading"),
-        ),
+        # cms.PSet (
+        #     name = cms.string("nConstituentsByHandLeading"),
+        #     title = cms.string("nConstituentsByHandLeading;nConstituentsByHandLeading"),
+        #     binsX = cms.untracked.vdouble(50, 0, 50), 
+        #     inputVariables = cms.vstring("nConstituentsByHandLeading"),
+        # ),
+        # cms.PSet (
+        #     name = cms.string("nConstituentsByHandSubleading"),
+        #     title = cms.string("nConstituentsByHandSubleading;nConstituentsByHandSubleading"),
+        #     binsX = cms.untracked.vdouble(50, 0, 50), 
+        #     inputVariables = cms.vstring("nConstituentsByHandSubleading"),
+        # ),
     )
 )
 
