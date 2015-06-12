@@ -1,0 +1,20 @@
+Executable = /cvmfs/cms.cern.ch/slc6_amd64_gcc491/cms/cmssw/CMSSW_7_3_2/bin/slc6_amd64_gcc491/cmsRun
+
+Universe = vanilla
+Getenv = True
+Requirements = Memory > 1900 
+Arguments = config_cfg.py True 819 $(Process) FilesInDirectory:JetHt2012A JetHt2012A
+
+Output = condor_$(Process).out
+Error = condor_$(Process).err
+Log = condor_$(Process).log
+
+x509userproxy = /tmp/x509up_u525
+
+should_transfer_files   = YES
+Transfer_Input_files = config_cfg.py,dibosonConfigWithJEC_cfg.py,datasetInfo_JetHt2012A_cfg.py,/tmp/x509up_u525,CSA14_V4_DATA.db
+
++IsLocalJob = true
+Rank = TARGET.IsLocalSlot
+
+Queue 819
