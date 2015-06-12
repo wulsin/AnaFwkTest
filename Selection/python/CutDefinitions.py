@@ -187,7 +187,7 @@ skimSelection.append(electronVeto)
 skimSelection.append(jetPtCut)
 skimSelection.append(jetEtaCut)
 skimSelection.append(jetExtraJetVeto)
-#skimSelection.append(jetNConstituentsCut)  
+skimSelection.append(jetNConstituentsCut)  
 
 ##########################################################################
 
