@@ -25,7 +25,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 100
 
 
 # sample ROOT file
-set_input(process, "/home/hart/diboson/CMSSW_5_3_28_patch1/src/subjetFilter.root")  
+set_input(process, "/home/hart/subjetFilter.root")  
 #set_input(process, "root://cmsxrootd.fnal.gov//store/user/ahart/JetHT/SubjetFilter-v1/150605_174426/0000/subjetFilter_new_1.root")
 
 # sample dataset nickname
