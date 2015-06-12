@@ -31,22 +31,22 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
   //  cout << (*handles_.basicjets).at(0).subjets()).at(0).pt() << endl;
   //  cout << (*handles_.basicjets).at(0).getJetConstituents().at(0)->pt() << endl;
 
-  int getJetConstituentsSize0 = -9;  
-  int getJetConstituentsSize1 = -9;  
-  int nConstituentsByHand0    = -9;  
-  int nConstituentsByHand1    = -9;  
+  int getJetConstituentsSizeLeading = -9;  
+  int getJetConstituentsSizeSubleading = -9;  
+  int nConstituentsByHandLeading       = -9;  
+  int nConstituentsByHandSubleading    = -9;  
 
 
   double sqrtY0 = 0.0, sqrtY1 = 0.0;
   double invMassSubjets0 = 0.0, invMassSubjets1 = 0.0;  
-  int chargedMultiplicity0 = -9, chargedMultiplicity1 = -9;  
+  int chargedMultiplicityLeading = -9, chargedMultiplicitySubleading = -9;  
   if ((*handles_.basicjets).size() != 2) {
     cout << "ERROR:  number of basic jets should be exactly 2!  " << endl;
   } else {
-    getJetConstituentsSize0  = handles_.basicjets->at(0).getJetConstituents().size();  
-    getJetConstituentsSize1  = handles_.basicjets->at(1).getJetConstituents().size();  
-    nConstituentsByHand0     = handles_.basicjets->at(0).nConstituents();  
-    nConstituentsByHand1     = handles_.basicjets->at(1).nConstituents(); 
+    getJetConstituentsSizeLeading  = handles_.basicjets->at(0).getJetConstituents().size();  
+    getJetConstituentsSizeSubleading  = handles_.basicjets->at(1).getJetConstituents().size();  
+    nConstituentsByHandLeading        = handles_.basicjets->at(0).nConstituents();  
+    nConstituentsByHandSubleading     = handles_.basicjets->at(1).nConstituents(); 
 
 
     if (handles_.basicjets->at (0).nConstituents () > 1)
@@ -65,7 +65,7 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
 	const reco::PFJet* subjet0 = findSubjet(handles_.jets, handles_.basicjets->at(0).getJetConstituents ().at(0)); 
 	const reco::PFJet* subjet1 = findSubjet(handles_.jets, handles_.basicjets->at(0).getJetConstituents ().at(1)); 
 	if (subjet0 && subjet1) {
-	  chargedMultiplicity0 = subjet0->chargedMultiplicity() + subjet1->chargedMultiplicity();  
+	  chargedMultiplicityLeading = subjet0->chargedMultiplicity() + subjet1->chargedMultiplicity();  
 	}
       }
     if (handles_.basicjets->at (1).nConstituents () > 1)
@@ -84,7 +84,7 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
 	const reco::PFJet* subjet0 = findSubjet(handles_.jets, handles_.basicjets->at(1).getJetConstituents ().at(0)); 
 	const reco::PFJet* subjet1 = findSubjet(handles_.jets, handles_.basicjets->at(1).getJetConstituents ().at(1)); 
 	if (subjet0 && subjet1) {
-	  chargedMultiplicity1 = subjet0->chargedMultiplicity() + subjet1->chargedMultiplicity();  
+	  chargedMultiplicitySubleading = subjet0->chargedMultiplicity() + subjet1->chargedMultiplicity();  
 	}
       }
   }
@@ -96,14 +96,14 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
   (*eventvariables)["basicjetMassMin"] = min<double> (invMassSubjets0, invMassSubjets1);  
   (*eventvariables)["basicjetMassMax"] = max<double> (invMassSubjets0, invMassSubjets1);  
 
-  (*eventvariables)["chargedMultiplicity0"] = chargedMultiplicity0;  
-  (*eventvariables)["chargedMultiplicity1"] = chargedMultiplicity1;  
+  (*eventvariables)["chargedMultiplicityLeading"] = chargedMultiplicityLeading;  
+  (*eventvariables)["chargedMultiplicitySubleading"] = chargedMultiplicitySubleading;  
 
 
-  (*eventvariables)["getJetConstituentsSize0"]  = getJetConstituentsSize0;
-  (*eventvariables)["getJetConstituentsSize1"]  = getJetConstituentsSize1;
-  (*eventvariables)["nConstituentsByHand0"]     = nConstituentsByHand0;
-  (*eventvariables)["nConstituentsByHand1"]     = nConstituentsByHand1;
+  (*eventvariables)["getJetConstituentsSizeLeading"]  = getJetConstituentsSizeLeading;
+  (*eventvariables)["getJetConstituentsSizeSubleading"]  = getJetConstituentsSizeSubleading;
+  (*eventvariables)["nConstituentsByHandLeading"]     = nConstituentsByHandLeading;
+  (*eventvariables)["nConstituentsByHandSubleading"]     = nConstituentsByHandSubleading;
 
 #endif
 }  

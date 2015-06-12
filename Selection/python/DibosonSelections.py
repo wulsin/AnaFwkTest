@@ -42,20 +42,20 @@ lowMassChannel = cms.PSet(
     cuts = copy.deepcopy(preselection)
 )
 
-jet1LowMassCut = cms.PSet (
+jetLeadingLowMassCut = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
     cutString = cms.string("fabs ( basicjetMassMax - 50 ) < 10"),
     numberRequired = cms.string(">= 1"),
 )
 
-jet2LowMassCut = cms.PSet (
+jetSubleadingLowMassCut = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
     cutString = cms.string("fabs ( basicjetMassMin - 50 ) < 10"),
     numberRequired = cms.string(">= 1"),
 )
 
-lowMassChannel.cuts.append(jet1LowMassCut)
-lowMassChannel.cuts.append(jet2LowMassCut)
+lowMassChannel.cuts.append(jetLeadingLowMassCut)
+lowMassChannel.cuts.append(jetSubleadingLowMassCut)
 
 ##########################################################################
 ##############################  WZ Channel  ##############################

@@ -117,27 +117,27 @@ jetNConstituentsCut = cms.PSet (
 )
 
 
-jet1MinTrksCut = cms.PSet (
+jetLeadingMinTrksCut = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
-    cutString = cms.string("basicjetNConstChgd1 > 0"),
+    cutString = cms.string("basicjetNConstChgdLeading > 0"),
     numberRequired = cms.string(">= 1"),
 )
 
-jet2MinTrksCut = cms.PSet (
+jetSubleadingMinTrksCut = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
-    cutString = cms.string("basicjetNConstChgd2 > 0"),
+    cutString = cms.string("basicjetNConstChgdSubleading > 0"),
     numberRequired = cms.string(">= 1"),
 )
 
-jet1MaxTrksCut = cms.PSet (
+jetLeadingMaxTrksCut = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
-    cutString = cms.string("chargedMultiplicity0 < 30"),
+    cutString = cms.string("chargedMultiplicityLeading < 30"),
     numberRequired = cms.string(">= 1"),
 )
 
-jet2MaxTrksCut = cms.PSet (
+jetSubleadingMaxTrksCut = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
-    cutString = cms.string("chargedMultiplicity1 < 30"),
+    cutString = cms.string("chargedMultiplicitySubleading < 30"),
     numberRequired = cms.string(">= 1"),
 )
 
@@ -192,10 +192,10 @@ skimSelection.append(jetNConstituentsCut)
 ##########################################################################
 
 jetSelection = cms.VPSet ()
-#jetSelection.append(jet1MinTrksCut)
-#jetSelection.append(jet2MinTrksCut)
-jetSelection.append(jet1MaxTrksCut)
-jetSelection.append(jet2MaxTrksCut)
+#jetSelection.append(jetLeadingMinTrksCut)
+#jetSelection.append(jetSubleadingMinTrksCut)
+jetSelection.append(jetLeadingMaxTrksCut)
+jetSelection.append(jetSubleadingMaxTrksCut)
 
 ##########################################################################
 
