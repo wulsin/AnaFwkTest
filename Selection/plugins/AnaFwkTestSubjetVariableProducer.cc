@@ -45,57 +45,60 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
   double sqrtY0 = 0.0, sqrtY1 = 0.0;
   TLorentzVector fatjetLeading, fatjetSubleading;  
 
-  if ((*handles_.basicjets).size() != 2) {
-    cout << "ERROR:  number of basic jets should be exactly 2!  " << endl;
-  } else {
-    getJetConstituentsSizeLeading     = handles_.basicjets->at(0).getJetConstituents().size();  
-    getJetConstituentsSizeSubleading  = handles_.basicjets->at(1).getJetConstituents().size();  
-    nConstituentsByHandLeading        = handles_.basicjets->at(0).nConstituents();  
-    nConstituentsByHandSubleading     = handles_.basicjets->at(1).nConstituents(); 
+  if (handles_.basicjets->size () > 0)
+    {
+      getJetConstituentsSizeLeading     = handles_.basicjets->at(0).getJetConstituents().size();  
+      nConstituentsByHandLeading        = handles_.basicjets->at(0).nConstituents();  
 
+      if (handles_.basicjets->at (0).nConstituents () > 1)
+        {
+          pair<TLorentzVector, TLorentzVector> subjetMomenta;
+          const reco::Candidate &subjet0 = *handles_.basicjets->at (0).getJetConstituents ().at (0);
+          const reco::Candidate &subjet1 = *handles_.basicjets->at (0).getJetConstituents ().at (1);
+          subjetMomenta.first.SetPtEtaPhiE (subjet0.pt (), subjet0.eta (), subjet0.phi (), subjet0.energy ());
+          subjetMomenta.second.SetPtEtaPhiE (subjet1.pt (), subjet1.eta (), subjet1.phi (), subjet1.energy ());
+          sqrtY0 = min<double> (subjetMomenta.first.Pt (), subjetMomenta.second.Pt ()) * (subjetMomenta.first.DeltaR (subjetMomenta.second) / (subjetMomenta.first + subjetMomenta.second).M ());
 
-    if (handles_.basicjets->at (0).nConstituents () > 1)
-      {
-        pair<TLorentzVector, TLorentzVector> p;
-        p.first.SetPtEtaPhiE (handles_.basicjets->at (0).getJetConstituents ().at (0)->pt (),
-                              handles_.basicjets->at (0).getJetConstituents ().at (0)->eta (),
-                              handles_.basicjets->at (0).getJetConstituents ().at (0)->phi (),
-                              handles_.basicjets->at (0).getJetConstituents ().at (0)->energy ());
-        p.second.SetPtEtaPhiE (handles_.basicjets->at (0).getJetConstituents ().at (1)->pt (),
-                               handles_.basicjets->at (0).getJetConstituents ().at (1)->eta (),
-                               handles_.basicjets->at (0).getJetConstituents ().at (1)->phi (),
-                               handles_.basicjets->at (0).getJetConstituents ().at (1)->energy ());
-	// FIXME:  Eventually, the 4-momentum of the fat jet should be set equal to the 
-	// sum of the 4-momenta of the 3 filterjets, not the 2 subjets.  
-	fatjetLeading = p.first + p.second;  // 4-momentum of two subjets combined
+          fatjetLeading.SetPtEtaPhiE (0.0, 0.0, 0.0, 0.0);
+          chargedMultiplicityLeading = 0;
+          for (int iFilterJet = 2; iFilterJet < nConstituentsByHandLeading; iFilterJet++)
+            {
+              const reco::PFJet &constituent = *((reco::PFJet *) &(*handles_.basicjets->at (0).getJetConstituents ().at (iFilterJet)));
+              TLorentzVector p;
+              p.SetPtEtaPhiE (constituent.pt (), constituent.eta (), constituent.phi (), constituent.energy ());
+              fatjetLeading += p;
 
-        sqrtY0 = min<double> (p.first.Pt (), p.second.Pt ()) * (p.first.DeltaR (p.second) / fatjetLeading.M());  
-	const reco::PFJet* subjet0 = findSubjet(handles_.jets, handles_.basicjets->at(0).getJetConstituents ().at(0)); 
-	const reco::PFJet* subjet1 = findSubjet(handles_.jets, handles_.basicjets->at(0).getJetConstituents ().at(1)); 
-	if (subjet0 && subjet1) {
-	  chargedMultiplicityLeading = subjet0->chargedMultiplicity() + subjet1->chargedMultiplicity();  // FIXME:  calculate chargedMultiplicity from the original ungroomed jet, not from the subjets  
-	}
-      }
-    if (handles_.basicjets->at (1).nConstituents () > 1)
-      {
-        pair<TLorentzVector, TLorentzVector> p;
-        p.first.SetPtEtaPhiE (handles_.basicjets->at (1).getJetConstituents ().at (0)->pt (),
-                              handles_.basicjets->at (1).getJetConstituents ().at (0)->eta (),
-                              handles_.basicjets->at (1).getJetConstituents ().at (0)->phi (),
-                              handles_.basicjets->at (1).getJetConstituents ().at (0)->energy ());
-        p.second.SetPtEtaPhiE (handles_.basicjets->at (1).getJetConstituents ().at (1)->pt (),
-                               handles_.basicjets->at (1).getJetConstituents ().at (1)->eta (),
-                               handles_.basicjets->at (1).getJetConstituents ().at (1)->phi (),
-                               handles_.basicjets->at (1).getJetConstituents ().at (1)->energy ());
-	fatjetSubleading = p.first + p.second;  // 4-momentum of two subjets combined
-	sqrtY1 = min<double> (p.first.Pt (), p.second.Pt ()) * (p.first.DeltaR (p.second) / fatjetSubleading.M());  
-	const reco::PFJet* subjet0 = findSubjet(handles_.jets, handles_.basicjets->at(1).getJetConstituents ().at(0)); 
-	const reco::PFJet* subjet1 = findSubjet(handles_.jets, handles_.basicjets->at(1).getJetConstituents ().at(1)); 
-	if (subjet0 && subjet1) {
-	  chargedMultiplicitySubleading = subjet0->chargedMultiplicity() + subjet1->chargedMultiplicity();  
-	}
-      }
-  }
+              chargedMultiplicityLeading += constituent.chargedMultiplicity ();
+            }
+        }
+    }
+  if (handles_.basicjets->size () > 1)
+    {
+      getJetConstituentsSizeSubleading     = handles_.basicjets->at(1).getJetConstituents().size();  
+      nConstituentsByHandSubleading        = handles_.basicjets->at(1).nConstituents();  
+
+      if (handles_.basicjets->at (1).nConstituents () > 1)
+        {
+          pair<TLorentzVector, TLorentzVector> subjetMomenta;
+          const reco::Candidate &subjet0 = *handles_.basicjets->at (1).getJetConstituents ().at (0);
+          const reco::Candidate &subjet1 = *handles_.basicjets->at (1).getJetConstituents ().at (1);
+          subjetMomenta.first.SetPtEtaPhiE (subjet0.pt (), subjet0.eta (), subjet0.phi (), subjet0.energy ());
+          subjetMomenta.second.SetPtEtaPhiE (subjet1.pt (), subjet1.eta (), subjet1.phi (), subjet1.energy ());
+          sqrtY0 = min<double> (subjetMomenta.first.Pt (), subjetMomenta.second.Pt ()) * (subjetMomenta.first.DeltaR (subjetMomenta.second) / (subjetMomenta.first + subjetMomenta.second).M ());
+
+          fatjetSubleading.SetPtEtaPhiE (0.0, 0.0, 0.0, 0.0);
+          chargedMultiplicitySubleading = 0;
+          for (int iFilterJet = 2; iFilterJet < nConstituentsByHandSubleading; iFilterJet++)
+            {
+              const reco::PFJet &constituent = *((reco::PFJet *) &(*handles_.basicjets->at (1).getJetConstituents ().at (iFilterJet)));
+              TLorentzVector p;
+              p.SetPtEtaPhiE (constituent.pt (), constituent.eta (), constituent.phi (), constituent.energy ());
+              fatjetSubleading += p;
+
+              chargedMultiplicitySubleading += constituent.chargedMultiplicity ();
+            }
+        }
+    }
   
 
   (*eventvariables)["mLeading"] =                   fatjetLeading.M();   		 
@@ -131,41 +134,6 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
 
 #endif
 }  
-
-double
-AnaFwkTestSubjetVariableProducer::jetMass (const reco::BasicJet &jet) const
-{
-#if DATA_FORMAT == AOD
-  return (jet.getJetConstituents ().at (0)->p4 () + jet.getJetConstituents ().at (1)->p4 ()).M ();
-#else
-  return -1.0;
-#endif
-}
-
-// Return the subjet closest to cand. 
-// Follow algorithm used in const pat::Jet* SubjetFilterValidator::findPATJet()
-// in http://cvs.web.cern.ch/cvs/cgi-bin/viewcvs.cgi/UserCode/SchieferD/SubjetFilterValidation/plugins/SubjetFilterValidator.cc?revision=1.3
-const reco::PFJet* AnaFwkTestSubjetVariableProducer::findSubjet(const edm::Handle<reco::PFJetCollection>& subjets, const edm::Ptr<reco::Candidate>& cand) const 
-{
-
-  const reco::PFJet* result(0);
-  double dRMin(1E+10);
-
-  for (reco::PFJetCollection::const_iterator subjet = subjets->begin(); subjet != subjets->end(); ++subjet) { 
-    double dR = reco::deltaR(*cand, *subjet);
-    if (dR<dRMin) { 
-      result = &(*subjet); 
-      dRMin=dR; 
-    }
-  }
-  if (dRMin>1E-05) cout<< "findSubjet WARNING: dRMin=" << dRMin
-		       << " (pT=" << result->pt() << " / " << cand->pt() << ")" << endl;
-  
-  return result;
-
-}
-  
-
 
 
 #include "FWCore/Framework/interface/MakerMacros.h"
