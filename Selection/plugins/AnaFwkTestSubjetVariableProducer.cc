@@ -61,7 +61,7 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
 
           fatjetLeading.SetPtEtaPhiE (0.0, 0.0, 0.0, 0.0);
           chargedMultiplicityLeading = 0;
-          for (int iFilterJet = 2; iFilterJet < nConstituentsByHandLeading; iFilterJet++)
+          for (int iFilterJet = 2; iFilterJet < min<int> (3, nConstituentsByHandLeading); iFilterJet++)
             {
               const reco::PFJet &constituent = *((reco::PFJet *) &(*handles_.basicjets->at (0).getJetConstituents ().at (iFilterJet)));
               TLorentzVector p;
@@ -88,7 +88,7 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
 
           fatjetSubleading.SetPtEtaPhiE (0.0, 0.0, 0.0, 0.0);
           chargedMultiplicitySubleading = 0;
-          for (int iFilterJet = 2; iFilterJet < nConstituentsByHandSubleading; iFilterJet++)
+          for (int iFilterJet = 2; iFilterJet < min<int> (3, nConstituentsByHandSubleading); iFilterJet++)
             {
               const reco::PFJet &constituent = *((reco::PFJet *) &(*handles_.basicjets->at (1).getJetConstituents ().at (iFilterJet)));
               TLorentzVector p;
