@@ -15,6 +15,7 @@ class AnaFwkTestSubjetVariableProducer : public EventVariableProducer
 
 	// Functions
 	void AddVariables(const edm::Event &);
+        const reco::PFJet* findSubjet(const edm::Handle<reco::PFJetCollection>&, const reco::PFJet &) const;
   };
 
 #endif

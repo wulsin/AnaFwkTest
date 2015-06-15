@@ -64,8 +64,9 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
           for (int iFilterJet = 2; iFilterJet < min<int> (3, nConstituentsByHandLeading); iFilterJet++)
             {
               const reco::PFJet &constituent = *((reco::PFJet *) &(*handles_.basicjets->at (0).getJetConstituents ().at (iFilterJet)));
+              const reco::PFJet *correctedConstituent = findSubjet (handles_.jets, constituent);
               TLorentzVector p;
-              p.SetPtEtaPhiE (constituent.pt (), constituent.eta (), constituent.phi (), constituent.energy ());
+              p.SetPtEtaPhiE (correctedConstituent->pt (), correctedConstituent->eta (), correctedConstituent->phi (), correctedConstituent->energy ());
               fatjetLeading += p;
 
               chargedMultiplicityLeading += constituent.chargedMultiplicity ();
@@ -91,8 +92,9 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
           for (int iFilterJet = 2; iFilterJet < min<int> (3, nConstituentsByHandSubleading); iFilterJet++)
             {
               const reco::PFJet &constituent = *((reco::PFJet *) &(*handles_.basicjets->at (1).getJetConstituents ().at (iFilterJet)));
+              const reco::PFJet *correctedConstituent = findSubjet (handles_.jets, constituent);
               TLorentzVector p;
-              p.SetPtEtaPhiE (constituent.pt (), constituent.eta (), constituent.phi (), constituent.energy ());
+              p.SetPtEtaPhiE (correctedConstituent->pt (), correctedConstituent->eta (), correctedConstituent->phi (), correctedConstituent->energy ());
               fatjetSubleading += p;
 
               chargedMultiplicitySubleading += constituent.chargedMultiplicity ();
@@ -135,6 +137,28 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
 #endif
 }  
 
+// Return the subjet closest to cand. 
+// Follow algorithm used in const pat::Jet* SubjetFilterValidator::findPATJet()
+// in http://cvs.web.cern.ch/cvs/cgi-bin/viewcvs.cgi/UserCode/SchieferD/SubjetFilterValidation/plugins/SubjetFilterValidator.cc?revision=1.3
+const reco::PFJet* AnaFwkTestSubjetVariableProducer::findSubjet(const edm::Handle<reco::PFJetCollection>& subjets, const reco::PFJet &cand) const 
+{
+
+  const reco::PFJet* result(0);
+  double dRMin(1E+10);
+
+  for (reco::PFJetCollection::const_iterator subjet = subjets->begin(); subjet != subjets->end(); ++subjet) { 
+    double dR = reco::deltaR(cand, *subjet);
+    if (dR<dRMin) { 
+      result = &(*subjet); 
+      dRMin=dR; 
+    }
+  }
+  if (dRMin>1E-05) cout<< "findSubjet WARNING: dRMin=" << dRMin
+                       << " (pT=" << result->pt() << " / " << cand.pt() << ")" << endl;
+  
+  return result;
+
+}
 
 #include "FWCore/Framework/interface/MakerMacros.h"
 DEFINE_FWK_MODULE(AnaFwkTestSubjetVariableProducer);
