@@ -345,8 +345,8 @@ MyEventVarHistograms = cms.PSet(
         ),
         cms.PSet (
             name = cms.string("rapidityDiff"),
-            title = cms.string("rapidity difference of 2 fatjets;jet |y_{1} - y_{2}|"),
-            binsX = cms.untracked.vdouble(100, 0, 5), 
+            title = cms.string("rapidity difference of 2 fatjets;jet y_{1} - y_{2}"),
+            binsX = cms.untracked.vdouble(100, -5, 5), 
             inputVariables = cms.vstring("rapidityDiff"),
         ),
         cms.PSet (
