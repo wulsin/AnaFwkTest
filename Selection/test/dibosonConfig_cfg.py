@@ -25,8 +25,10 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 100
 
 
 # sample ROOT file
-set_input(process, "/home/hart/subjetFilter.root")  
+#set_input(process, "/home/hart/subjetFilter.root")  
 #set_input(process, "root://cmsxrootd.fnal.gov//store/user/ahart/JetHT/SubjetFilter-v1/150605_174426/0000/subjetFilter_new_1.root")
+set_input(process, "/data/users/bing/condor/DiBosonSkimJune15/JetHtBCD/SkimChannel/skim_0.root")  
+
 
 # sample dataset nickname
 #set_input(process, "DYToTauTau_20")
@@ -54,8 +56,10 @@ collections = cms.PSet (
     electrons       =  cms.InputTag  ('gsfElectrons', ''),
     events          =  cms.InputTag  (''),
     genjets         =  cms.InputTag  (''),
-    jets            =  cms.InputTag  ('caSubjetFilterPFJets', 'filter'),  # subjets 
-    basicjets       =  cms.InputTag  ('leadingFat', "leadingFat"),     # leading 2 fat jets
+    # jets            =  cms.InputTag  ('caSubjetFilterPFJets', 'filter'),  # subjets, uncorrected
+    # basicjets       =  cms.InputTag  ('leadingFat', "leadingFat"),     # leading 2 fat jets, uncorrected
+    jets            =  cms.InputTag  ('correctedFilterJet', ''),  # subjets, uncorrected
+    basicjets       =  cms.InputTag  ('objectSelector0', ''),  # leading 2 fat jets, corrected
     mcparticles     =  cms.InputTag  (''),
     mets            =  cms.InputTag  ('pfMet', ''),
     muons           =  cms.InputTag  ('muons'),
@@ -88,7 +92,7 @@ from AnaFwkTest.Selection.MyProtoEventSelections import *
 
 channels = []
 channels.append(skimChannel)
-# channels.append(preselectionChannel)
+channels.append(preselectionChannel)
 # channels.append(lowMassChannel)
 # channels.append(WWChannel)
 channels.append(WZChannel)

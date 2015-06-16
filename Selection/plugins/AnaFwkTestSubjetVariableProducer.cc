@@ -61,7 +61,8 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
 
           fatjetLeading.SetPtEtaPhiE (0.0, 0.0, 0.0, 0.0);
           chargedMultiplicityLeading = 0;
-          for (int iFilterJet = 2; iFilterJet < min<int> (3, nConstituentsByHandLeading); iFilterJet++)
+	  // consider the leading 3 filter jets
+          for (int iFilterJet = 2; iFilterJet < min<int> (5, nConstituentsByHandLeading); iFilterJet++)
             {
               const reco::PFJet &constituent = *((reco::PFJet *) &(*handles_.basicjets->at (0).getJetConstituents ().at (iFilterJet)));
               const reco::PFJet *correctedConstituent = findSubjet (handles_.jets, constituent);
@@ -85,11 +86,12 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
           const reco::Candidate &subjet1 = *handles_.basicjets->at (1).getJetConstituents ().at (1);
           subjetMomenta.first.SetPtEtaPhiE (subjet0.pt (), subjet0.eta (), subjet0.phi (), subjet0.energy ());
           subjetMomenta.second.SetPtEtaPhiE (subjet1.pt (), subjet1.eta (), subjet1.phi (), subjet1.energy ());
-          sqrtY0 = min<double> (subjetMomenta.first.Pt (), subjetMomenta.second.Pt ()) * (subjetMomenta.first.DeltaR (subjetMomenta.second) / (subjetMomenta.first + subjetMomenta.second).M ());
+          sqrtY1 = min<double> (subjetMomenta.first.Pt (), subjetMomenta.second.Pt ()) * (subjetMomenta.first.DeltaR (subjetMomenta.second) / (subjetMomenta.first + subjetMomenta.second).M ());
 
           fatjetSubleading.SetPtEtaPhiE (0.0, 0.0, 0.0, 0.0);
           chargedMultiplicitySubleading = 0;
-          for (int iFilterJet = 2; iFilterJet < min<int> (3, nConstituentsByHandSubleading); iFilterJet++)
+	  // consider the leading 3 filter jets
+          for (int iFilterJet = 2; iFilterJet < min<int> (5, nConstituentsByHandSubleading); iFilterJet++)
             {
               const reco::PFJet &constituent = *((reco::PFJet *) &(*handles_.basicjets->at (1).getJetConstituents ().at (iFilterJet)));
               const reco::PFJet *correctedConstituent = findSubjet (handles_.jets, constituent);

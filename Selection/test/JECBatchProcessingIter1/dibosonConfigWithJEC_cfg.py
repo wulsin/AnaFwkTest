@@ -68,8 +68,8 @@ process.jec = cms.ESSource("PoolDBESSource",CondDBSetup,
               tag = cms.string("JetCorrectorParametersCollection_CSA14_V4_DATA_AK10PF"),
               label=cms.untracked.string("AK10PF")),
               cms.PSet(record = cms.string("JetCorrectionsRecord"),
-              tag = cms.string("JetCorrectorParametersCollection_CSA14_V4_DATA_AK4PF"),
-              label=cms.untracked.string("AK4PF")),
+              tag = cms.string("JetCorrectorParametersCollection_CSA14_V4_DATA_AK3PF"),
+              label=cms.untracked.string("AK3PF")),
         )
        )
 process.es_prefer_jec = cms.ESPrefer("PoolDBESSource","jec")
@@ -77,14 +77,18 @@ process.es_prefer_jec = cms.ESPrefer("PoolDBESSource","jec")
 #We can define multiple jet energy corrections to various jet collections.
  
 #Apply ak10PF corrections to fatjet.
-process.FatJetEnergyCorrection = cms.EDProducer("BasicJetCorrectionProducer",
+process.correctedFatJet = cms.EDProducer("BasicJetCorrectionProducer",
     src = cms.InputTag("leadingFat","leadingFat","SJF" ),
     correctors = cms.vstring('ak10PFL1FastjetL2L3')
 )
  
-#Apply ak3PF corrections to filterjet.
-process.FilterJetEnergyCorrection = cms.EDProducer("PFJetCorrectionProducer",
-    src = cms.InputTag('caSubjetFilterPFJets', 'sub'),
+#Apply ak3PF corrections to filterjet and subjet.
+process.correctedSubJet = cms.EDProducer("PFJetCorrectionProducer",
+    src = cms.InputTag('caSubjetFilterPFJets', 'sub','SJF'),
+    correctors = cms.vstring('ak3PFL1FastjetL2L3')
+)
+process.correctedFilterJet = cms.EDProducer("PFJetCorrectionProducer",
+    src = cms.InputTag('caSubjetFilterPFJets', 'filter','SJF'),
     correctors = cms.vstring('ak3PFL1FastjetL2L3')
 )
  
@@ -100,15 +104,15 @@ collections = cms.PSet (
     events          =  cms.InputTag  (''),
     genjets         =  cms.InputTag  (''),
     #jets            =  cms.InputTag  ('caSubjetFilterPFJets', 'sub'),  # subjets 
-    jets            =  cms.InputTag  ('FilterJetEnergyCorrection'),  # change the input tag of filterJet to the corrected one. 
+    jets            =  cms.InputTag  ('correctedFilterJet'),  # change the input tag of filterJet to the corrected one. 
     #basicjets       =  cms.InputTag  ('leadingFat', "leadingFat"),     # leading 2 fat jets
-    basicjets       =  cms.InputTag  ('FatJetEnergyCorrection'),     # change the input tag of fatJet to the corrected one.
+    basicjets       =  cms.InputTag  ('correctedFatJet'),     # change the input tag of fatJet to the corrected one.
     mcparticles     =  cms.InputTag  (''),
     mets            =  cms.InputTag  ('pfMet', ''),
     muons           =  cms.InputTag  ('muons'),
     photons         =  cms.InputTag  ('photons'),
     primaryvertexs  =  cms.InputTag  ('offlinePrimaryVertices'),
-    secMuons        =  cms.InputTag  ('muonsFromCosmics'),
+    secMuons        =  cms.InputTag  (''),
     stops           =  cms.InputTag  (''),
     superclusters   =  cms.InputTag  (''),
     taus            =  cms.InputTag  ('hpsPFTauProducer'),
@@ -122,7 +126,7 @@ collections = cms.PSet (
 ################################################################################
  
 variableProducers = []
-variableProducers.append("AnaFwkTestEventVariableProducer")
+#variableProducers.append("AnaFwkTestEventVariableProducer")
 variableProducers.append("AnaFwkTestSubjetVariableProducer")
  
 ################################################################################
@@ -134,7 +138,7 @@ from AnaFwkTest.Selection.MyProtoEventSelections import *
  
 channels = []
 channels.append(skimChannel)
-# channels.append(preselectionChannel)
+#channels.append(preselectionChannel)
 # channels.append(lowMassChannel)
 # channels.append(WWChannel)
 # channels.append(WZChannel)
@@ -153,12 +157,12 @@ from AnaFwkTest.Selection.DibosonHistogramDefinitions import *
 add_channels (process, channels, cms.VPSet (MyBasicJetHistograms, MyMetHistograms, BasicjetBasicjetHistograms, MyEventVarHistograms), collections, variableProducers)
  
 #Define a JEC path to run at the very beginning.
-process.JetEnergyCorrectionPath = cms.Path(process.FatJetEnergyCorrection + process.FilterJetEnergyCorrection )
+process.JetEnergyCorrectionPath = cms.Path(process.correctedFatJet + process.correctedFilterJet + process.correctedSubJet)
  
 #Insert the JEC to the very beginning of the scheduler. 
 process.schedule.insert(0,process.JetEnergyCorrectionPath)
 # uncomment to produce a full python configuration log file
-outfile = open('dumpedConfig.py','w'); print >> outfile,process.dumpPython(); outfile.close()
+#outfile = open('dumpedConfig.py','w'); print >> outfile,process.dumpPython(); outfile.close()
  
 #process.Tracer = cms.Service("Tracer")
                                                  
