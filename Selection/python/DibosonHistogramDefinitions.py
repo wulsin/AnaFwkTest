@@ -368,12 +368,6 @@ MyEventVarHistograms = cms.PSet(
             inputVariables = cms.vstring("maxSqrtY"),
         ),
         cms.PSet (
-            name = cms.string("eventVarMetPt"),
-            title = cms.string("Met pt; MET"), 
-            binsX = cms.untracked.vdouble(100, 0, 500),
-            inputVariables = cms.vstring("metPt"),
-        ),
-        cms.PSet (
             name = cms.string("fatjetMassMin"),
             title = cms.string("mass of lower-mass jet; jet mass [GeV]"), 
             binsX = cms.untracked.vdouble(100, 0, 500),
@@ -384,6 +378,12 @@ MyEventVarHistograms = cms.PSet(
             title = cms.string("mass of higher-mass jet; jet mass [GeV]"), 
             binsX = cms.untracked.vdouble(100, 0, 500),
             inputVariables = cms.vstring("fatjetMassMax"),
+        ),
+        cms.PSet (
+            name = cms.string("invMassLeadingSubleading"),
+            title = cms.string("invariant mass of leading and subleading jets; m_{jj} [GeV]"), 
+            binsX = cms.untracked.vdouble(350, 0, 3500),
+            inputVariables = cms.vstring("invMassLeadingSubleading"),
         ),
         cms.PSet (
             name = cms.string("chargedMultiplicityLeading"),
@@ -408,6 +408,12 @@ MyEventVarHistograms = cms.PSet(
             title = cms.string("getJetConstituentsSizeSubleading;getJetConstituentsSizeSubleading"),
             binsX = cms.untracked.vdouble(50, 0, 50), 
             inputVariables = cms.vstring("getJetConstituentsSizeSubleading"),
+        ),
+        cms.PSet (
+            name = cms.string("eventVarMetPt"),
+            title = cms.string("Met pt; MET"), 
+            binsX = cms.untracked.vdouble(100, 0, 500),
+            inputVariables = cms.vstring("metPt"),
         ),
         # cms.PSet (
         #     name = cms.string("nConstituentsByHandLeading"),
