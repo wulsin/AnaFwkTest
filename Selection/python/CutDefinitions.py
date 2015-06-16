@@ -7,6 +7,7 @@ from AnaFwkTest.Selection.CommonUtils import *
 ##########################################################################
 
 singleJetTrigger = cms.vstring("HLT_PFJet320_v")
+jetHtTrigger = cms.vstring("HLT_PFNoPUHT650_v","HLT_PFHT650_v","HLT_HT750_v","HLT_FatDiPFJetMass750_DR1p1_Deta1p5_v")
 
 ##########################################################################
 
@@ -207,8 +208,10 @@ skimSelection.append(jetNConstituentsCut)
 jetSelection = cms.VPSet ()
 #jetSelection.append(jetLeadingMinTrksCut)
 #jetSelection.append(jetSubleadingMinTrksCut)
-jetSelection.append(jetLeadingMaxTrksCut)
-jetSelection.append(jetSubleadingMaxTrksCut)
+
+# Do not include the n_trks < 30 cut because this distribution is not yet well understood
+# jetSelection.append(jetLeadingMaxTrksCut)
+# jetSelection.append(jetSubleadingMaxTrksCut)
 
 ##########################################################################
 

@@ -13,7 +13,7 @@ from AnaFwkTest.Selection.CutDefinitions import *
 
 skimChannel = cms.PSet(
     name = cms.string("SkimChannel"),
-    triggers = singleJetTrigger,
+    triggers = jetHtTrigger,  
     cuts = copy.deepcopy(skimSelection)
 )
 
@@ -26,7 +26,7 @@ skimChannel = cms.PSet(
 
 preselectionChannel = cms.PSet(
     name = cms.string("PreselectionChannel"),
-    triggers = singleJetTrigger,
+    triggers = jetHtTrigger,
     cuts = copy.deepcopy(preselection)
 )
 
@@ -38,7 +38,7 @@ preselectionChannel = cms.PSet(
 
 lowMassChannel = cms.PSet(
     name = cms.string("LowMassChannel"),
-    triggers = singleJetTrigger,
+    triggers = jetHtTrigger,
     cuts = copy.deepcopy(preselection)
 )
 
@@ -65,7 +65,7 @@ lowMassChannel.cuts.append(jetSubleadingLowMassCut)
 
 WZChannel = cms.PSet(
     name = cms.string("WZChannel"),
-    triggers = singleJetTrigger,
+    triggers = jetHtTrigger,
     cuts = copy.deepcopy(preselection)
 )
 
@@ -91,7 +91,7 @@ WZChannel.cuts.append(jetWMassCut_WZ)
 
 WWChannel = cms.PSet(
     name = cms.string("WWChannel"),
-    triggers = singleJetTrigger,
+    triggers = jetHtTrigger,
     cuts = copy.deepcopy(preselection)
 )
 
@@ -117,7 +117,7 @@ WWChannel.cuts.append(jetWMassCut_WW)
 
 ZZChannel = cms.PSet(
     name = cms.string("ZZChannel"),
-    triggers = singleJetTrigger,
+    triggers = jetHtTrigger,
     cuts = copy.deepcopy(preselection)
 )
 
