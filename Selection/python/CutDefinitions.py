@@ -92,6 +92,12 @@ electronVeto =  cms.PSet (
 
 # JET CUTS
 
+basicjetPtCut = cms.PSet (
+    inputCollection = cms.vstring("basicjets"),
+    cutString = cms.string("pt > 20"),
+    numberRequired = cms.string(">= 2")
+)
+
 jetLeadingPtCut = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
     cutString = cms.string("ptLeading > 20"),
@@ -196,12 +202,13 @@ skimSelection.append(electronD0Cut)
 skimSelection.append(electronIDCut)
 skimSelection.append(electronVeto)
 
-skimSelection.append(jetLeadingPtCut)
-skimSelection.append(jetSubleadingPtCut)
+#skimSelection.append(jetLeadingPtCut)
+#skimSelection.append(jetSubleadingPtCut)
+skimSelection.append(jetNConstituentsCut)  
+skimSelection.append(basicjetPtCut)  
 skimSelection.append(jetLeadingEtaCut)
 skimSelection.append(jetSubleadingEtaCut)
 skimSelection.append(jetExtraJetVeto)
-skimSelection.append(jetNConstituentsCut)  
 
 ##########################################################################
 
