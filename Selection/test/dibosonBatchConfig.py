@@ -20,8 +20,8 @@ datasets = [
 InputCondorArguments = {}
 
 
-labels['JetHt2012BCD_SkimTest'] = "JetHt 2012BCD"  
-types ['JetHt2012BCD_SkimTest'] = "data"  
+labels['JetHt2012BCD_Skim'] = "JetHt 2012BCD"  
+types ['JetHt2012BCD_Skim'] = "data"  
 
 
 
