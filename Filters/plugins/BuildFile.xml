@@ -1,0 +1,40 @@
+<use  name="root"/>
+<use  name="rootcint"/>
+<use  name="rootcintex"/>
+<use  name="rootcore"/>
+<use  name="rooteg"/>
+<use  name="rooteve"/>
+<use  name="rootfoam"/>
+<use  name="rootgeom"/>
+<use  name="rootgeompainter"/>
+<use  name="rootgpad"/>
+<use  name="rootgraphics"/>
+<use  name="rootguihtml"/>
+<use  name="roothistmatrix"/>
+<use  name="roothtml"/>
+<use  name="rootinteractive"/>
+<use  name="rootmath"/>
+<use  name="rootmathcore"/>
+<use  name="rootminuit"/>
+<use  name="rootminuit2"/>
+<use  name="rootmlp"/>
+<use  name="rootphysics"/>
+<use  name="rootpy"/>
+<use  name="rootrflx"/>
+<use  name="rootrgl"/>
+<use  name="rootrint"/>
+<use  name="rootrio"/>
+<use  name="rootspectrum"/>
+<use  name="rootthread"/>
+<use  name="roottmva"/>
+<use  name="rootxml"/>
+<use  name="rootxmlio"/>
+<use  name="DataFormats/Common"/>
+<use  name="DataFormats/HepMCCandidate"/>
+<use  name="DataFormats/JetReco"/>
+<use  name="FWCore/Framework"/>
+<use  name="FWCore/ParameterSet"/>
+<flags  CXXFLAGS="-mtune=core2 -march=core2 -O3 -pipe"/>
+<library  file="HighPtZ.cc"  name="AnaFwkTestFiltersPlugins">
+  <flags  EDM_PLUGIN="1"/>
+</library>
