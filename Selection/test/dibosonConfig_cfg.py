@@ -59,7 +59,7 @@ collections = cms.PSet (
   muons           =  cms.InputTag  ('selectedPatMuonsPFlow',       ''),
   photons         =  cms.InputTag  ('selectedPatPhotons',          ''),
   primaryvertexs  =  cms.InputTag  ('offlinePrimaryVertices',      ''),
-  taus            =  cms.InputTag  ('selectedPatTaus',             ''),
+  #taus            =  cms.InputTag  ('selectedPatTaus',             ''),
   triggers        =  cms.InputTag  ('TriggerResults',              '',   'PAT'),
 )
 
