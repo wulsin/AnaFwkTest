@@ -27,8 +27,8 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 100
 # sample ROOT file
 #set_input(process, "/home/hart/subjetFilter.root")  
 #set_input(process, "root://cmsxrootd.fnal.gov//store/user/ahart/JetHT/SubjetFilter-v1/150605_174426/0000/subjetFilter_new_1.root")
-set_input(process, "/data/users/bing/condor/DiBosonSkimJune15/JetHtBCD/SkimChannel/skim_0.root")  
-
+#set_input(process, "/data/users/bing/condor/DiBosonSkimJune15/JetHtBCD/SkimChannel/skim_0.root")  
+set_input(process, "/home/wulsin/dibosonResonance/ntuples/CMSSW_5_3_28_patch1/src/AnaFwkTest/Producers/test/patTuple_PATandPF2PAT_RSGravitonToZZ_kMpl01_M-2000.root")  
 
 # sample dataset nickname
 #set_input(process, "DYToTauTau_20")
@@ -60,7 +60,7 @@ collections = cms.PSet (
     photons         =  cms.InputTag  ('selectedPatPhotons',          ''),
     primaryvertexs  =  cms.InputTag  ('offlinePrimaryVertices',      ''),
     #taus            =  cms.InputTag  ('selectedPatTaus',             ''),
-    triggers        =  cms.InputTag  ('TriggerResults',              '',   'PAT'),
+    triggers        =  cms.InputTag  ('TriggerResults',              '',   'HLT'),
 )
 
 ################################################################################
@@ -83,8 +83,8 @@ channels.append(skimChannel)
 channels.append(preselectionChannel)
 # channels.append(lowMassChannel)
 # channels.append(WWChannel)
-channels.append(WZChannel)
-# channels.append(ZZChannel)
+# channels.append(WZChannel)
+channels.append(ZZChannel)
 
 ################################################################################
 ##### Import the histograms to be plotted ######################################
