@@ -27,8 +27,8 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 100
 # sample ROOT file
 #set_input(process, "/home/hart/subjetFilter.root")  
 #set_input(process, "root://cmsxrootd.fnal.gov//store/user/ahart/JetHT/SubjetFilter-v1/150605_174426/0000/subjetFilter_new_1.root")
-set_input(process, "/data/users/bing/condor/DiBosonSkimJune15/JetHtBCD/SkimChannel/skim_0.root")  
-
+#set_input(process, "/data/users/bing/condor/DiBosonSkimJune15/JetHtBCD/SkimChannel/skim_0.root")  
+set_input(process, "/home/wulsin/dibosonResonance/ntuples/CMSSW_5_3_28_patch1/src/AnaFwkTest/Producers/test/patTuple_PATandPF2PAT_RSGravitonToZZ_kMpl01_M-2000.root")  
 
 # sample dataset nickname
 #set_input(process, "DYToTauTau_20")
@@ -51,28 +51,16 @@ process.maxEvents = cms.untracked.PSet (
 
 # this PSet specifies which collections to get from the input files
 collections = cms.PSet (
-    beamspots       =  cms.InputTag  ('offlineBeamSpot','', 'RECO'),
-    bxlumis         =  cms.InputTag  (''),
-    electrons       =  cms.InputTag  ('gsfElectrons', ''),
-    events          =  cms.InputTag  (''),
-    genjets         =  cms.InputTag  (''),
-    # jets            =  cms.InputTag  ('caSubjetFilterPFJets', 'filter'),  # subjets, uncorrected
-    # basicjets       =  cms.InputTag  ('leadingFat', "leadingFat"),     # leading 2 fat jets, uncorrected
-    jets            =  cms.InputTag  ('correctedFilterJet', ''),  # subjets, corrected
-    basicjets       =  cms.InputTag  ('objectSelector0', ''),  # leading 2 fat jets, corrected
-    mcparticles     =  cms.InputTag  (''),
-    mets            =  cms.InputTag  ('pfMet', ''),
-    muons           =  cms.InputTag  ('muons'),
-    photons         =  cms.InputTag  ('photons'),
-    primaryvertexs  =  cms.InputTag  ('offlinePrimaryVertices'),
-#    secMuons        =  cms.InputTag  ('muonsFromCosmics'),
-    secMuons        =  cms.InputTag  (''),  # do not include this collection:  it creates problems when running over the skim
-    stops           =  cms.InputTag  (''),
-    superclusters   =  cms.InputTag  (''),
-    taus            =  cms.InputTag  ('hpsPFTauProducer'),
-    tracks          =  cms.InputTag  ('generalTracks'),
-    triggers        =  cms.InputTag  ("TriggerResults","","HLT"),   
-    trigobjs        =  cms.InputTag  (''),
+    basicjets       =  cms.InputTag  ('leadingFatPatJet', 'leadingFat'),
+    beamspots       =  cms.InputTag  ('offlineBeamSpot',             ''),
+    electrons       =  cms.InputTag  ('selectedPatElectronsPFlow',   ''),
+    jets            =  cms.InputTag  ('selectedPatJetsPFlowFilter',  ''),
+    mets            =  cms.InputTag  ('patMETsPFlow',                ''),
+    muons           =  cms.InputTag  ('selectedPatMuonsPFlow',       ''),
+    photons         =  cms.InputTag  ('selectedPatPhotons',          ''),
+    primaryvertexs  =  cms.InputTag  ('offlinePrimaryVertices',      ''),
+    #taus            =  cms.InputTag  ('selectedPatTaus',             ''),
+    triggers        =  cms.InputTag  ('TriggerResults',              '',   'HLT'),
 )
 
 ################################################################################
@@ -95,8 +83,8 @@ channels.append(skimChannel)
 channels.append(preselectionChannel)
 # channels.append(lowMassChannel)
 # channels.append(WWChannel)
-channels.append(WZChannel)
-# channels.append(ZZChannel)
+# channels.append(WZChannel)
+channels.append(ZZChannel)
 
 ################################################################################
 ##### Import the histograms to be plotted ######################################
