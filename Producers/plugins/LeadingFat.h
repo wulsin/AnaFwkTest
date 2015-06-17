@@ -8,6 +8,7 @@
 #include "DataFormats/Common/interface/Handle.h"
 
 #include "DataFormats/JetReco/interface/BasicJet.h"
+#include "DataFormats/PatCandidates/interface/Jet.h"
 
 #include "FWCore/Framework/interface/EDProducer.h"
 #include "FWCore/Framework/interface/Event.h"
@@ -16,6 +17,7 @@
 
 using namespace std;
 
+template<class T>
 class LeadingFat : public edm::EDProducer
 {
  public:
@@ -23,7 +25,7 @@ class LeadingFat : public edm::EDProducer
   virtual ~LeadingFat ();
   void produce (edm::Event &, const edm::EventSetup &);
 
-  static bool jetPtDescending (const reco::BasicJet *, const reco::BasicJet *);
+  static bool jetPtDescending (const T *, const T *);
 
  private:
   edm::InputTag fats_;

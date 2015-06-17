@@ -1,22 +1,24 @@
 #include "AnaFwkTest/Producers/plugins/LeadingFat.h"
 
-LeadingFat::LeadingFat (const edm::ParameterSet &cfg) :
+template<class T>
+LeadingFat<T>::LeadingFat (const edm::ParameterSet &cfg) :
   fats_ (cfg.getParameter<edm::InputTag> ("fats"))
 {
-  produces<vector<reco::BasicJet> > ("leadingFat");
+  produces<vector<T> > ("leadingFat");
 }
 
-LeadingFat::~LeadingFat ()
+template<class T>
+LeadingFat<T>::~LeadingFat ()
 {
 }
 
-void
-LeadingFat::produce (edm::Event &event, const edm::EventSetup &setup)
+template<class T> void
+LeadingFat<T>::produce (edm::Event &event, const edm::EventSetup &setup)
 {
-  edm::Handle<vector<reco::BasicJet> > fats;
+  edm::Handle<vector<T> > fats;
   event.getByLabel (fats_, fats);
 
-  vector<const reco::BasicJet *> selectedFats;
+  vector<const T *> selectedFats;
   for (const auto &fat : *fats)
     {
       if (fabs (fat.eta ()) > 2.0)
@@ -25,7 +27,7 @@ LeadingFat::produce (edm::Event &event, const edm::EventSetup &setup)
     }
   sort (selectedFats.begin (), selectedFats.end (), jetPtDescending);
 
-  auto_ptr<vector<reco::BasicJet> > leadingFats (new vector<reco::BasicJet> ());
+  auto_ptr<vector<T> > leadingFats (new vector<T> ());
   if (selectedFats.size () > 0)
     leadingFats->push_back (*selectedFats.at (0));
   if (selectedFats.size () > 1)
@@ -34,11 +36,15 @@ LeadingFat::produce (edm::Event &event, const edm::EventSetup &setup)
   leadingFats.reset ();
 }
 
-bool
-LeadingFat::jetPtDescending (const reco::BasicJet *jet0, const reco::BasicJet *jet1)
+template<class T> bool
+LeadingFat<T>::jetPtDescending (const T *jet0, const T *jet1)
 {
   return (jet0->pt () > jet1->pt ());
 }
 
+typedef LeadingFat<reco::BasicJet> LeadingFatBasicJet;
+typedef LeadingFat<pat::Jet> LeadingFatPatJet;
+
 #include "FWCore/Framework/interface/MakerMacros.h"
-DEFINE_FWK_MODULE(LeadingFat);
+DEFINE_FWK_MODULE(LeadingFatBasicJet);
+DEFINE_FWK_MODULE(LeadingFatPatJet);
