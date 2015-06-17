@@ -23924,7 +23924,12 @@ process.out = cms.OutputModule("PoolOutputModule",
         'drop *_*Calo_pfCandidates_*', 
         'keep *_patMETs*_*_*', 
         'keep *_selectedPatPFParticles*_*_*', 
-        'keep *_selectedPatTrackCands*_*_*')
+        'keep *_selectedPatTrackCands*_*_*',
+
+        'keep *_offlineBeamSpot*_*_*',
+        'keep *_offlinePrimaryVertices*_*_*',
+        'keep *_TriggerResults*_*_*',
+    )
 )
 
 
@@ -27853,7 +27858,7 @@ process.leadTrackFinding = cms.PSet(
 )
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(10)
+    input = cms.untracked.int32(100)
 )
 
 process.noPrediscriminants = cms.PSet(
