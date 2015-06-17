@@ -51,28 +51,16 @@ process.maxEvents = cms.untracked.PSet (
 
 # this PSet specifies which collections to get from the input files
 collections = cms.PSet (
-    beamspots       =  cms.InputTag  ('offlineBeamSpot','', 'RECO'),
-    bxlumis         =  cms.InputTag  (''),
-    electrons       =  cms.InputTag  ('gsfElectrons', ''),
-    events          =  cms.InputTag  (''),
-    genjets         =  cms.InputTag  (''),
-    # jets            =  cms.InputTag  ('caSubjetFilterPFJets', 'filter'),  # subjets, uncorrected
-    # basicjets       =  cms.InputTag  ('leadingFat', "leadingFat"),     # leading 2 fat jets, uncorrected
-    jets            =  cms.InputTag  ('correctedFilterJet', ''),  # subjets, corrected
-    basicjets       =  cms.InputTag  ('objectSelector0', ''),  # leading 2 fat jets, corrected
-    mcparticles     =  cms.InputTag  (''),
-    mets            =  cms.InputTag  ('pfMet', ''),
-    muons           =  cms.InputTag  ('muons'),
-    photons         =  cms.InputTag  ('photons'),
-    primaryvertexs  =  cms.InputTag  ('offlinePrimaryVertices'),
-#    secMuons        =  cms.InputTag  ('muonsFromCosmics'),
-    secMuons        =  cms.InputTag  (''),  # do not include this collection:  it creates problems when running over the skim
-    stops           =  cms.InputTag  (''),
-    superclusters   =  cms.InputTag  (''),
-    taus            =  cms.InputTag  ('hpsPFTauProducer'),
-    tracks          =  cms.InputTag  ('generalTracks'),
-    triggers        =  cms.InputTag  ("TriggerResults","","HLT"),   
-    trigobjs        =  cms.InputTag  (''),
+  basicjets       =  cms.InputTag  ('selectedPatJetsPFlowFat',     ''),
+  beamspots       =  cms.InputTag  ('offlineBeamSpot',             ''),
+  electrons       =  cms.InputTag  ('selectedPatElectronsPFlow',   ''),
+  jets            =  cms.InputTag  ('selectedPatJetsPFlowFilter',  ''),
+  mets            =  cms.InputTag  ('patMETsPFlow',                ''),
+  muons           =  cms.InputTag  ('selectedPatMuonsPFlow',       ''),
+  photons         =  cms.InputTag  ('selectedPatPhotons',          ''),
+  primaryvertexs  =  cms.InputTag  ('offlinePrimaryVertices',      ''),
+  taus            =  cms.InputTag  ('selectedPatTaus',             ''),
+  triggers        =  cms.InputTag  ('TriggerResults',              '',   'PAT'),
 )
 
 ################################################################################
