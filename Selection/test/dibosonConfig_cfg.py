@@ -51,16 +51,16 @@ process.maxEvents = cms.untracked.PSet (
 
 # this PSet specifies which collections to get from the input files
 collections = cms.PSet (
-  basicjets       =  cms.InputTag  ('selectedPatJetsPFlowFat',     ''),
-  beamspots       =  cms.InputTag  ('offlineBeamSpot',             ''),
-  electrons       =  cms.InputTag  ('selectedPatElectronsPFlow',   ''),
-  jets            =  cms.InputTag  ('selectedPatJetsPFlowFilter',  ''),
-  mets            =  cms.InputTag  ('patMETsPFlow',                ''),
-  muons           =  cms.InputTag  ('selectedPatMuonsPFlow',       ''),
-  photons         =  cms.InputTag  ('selectedPatPhotons',          ''),
-  primaryvertexs  =  cms.InputTag  ('offlinePrimaryVertices',      ''),
-  #taus            =  cms.InputTag  ('selectedPatTaus',             ''),
-  triggers        =  cms.InputTag  ('TriggerResults',              '',   'PAT'),
+    basicjets       =  cms.InputTag  ('leadingFatPatJet', 'leadingFat'),
+    beamspots       =  cms.InputTag  ('offlineBeamSpot',             ''),
+    electrons       =  cms.InputTag  ('selectedPatElectronsPFlow',   ''),
+    jets            =  cms.InputTag  ('selectedPatJetsPFlowFilter',  ''),
+    mets            =  cms.InputTag  ('patMETsPFlow',                ''),
+    muons           =  cms.InputTag  ('selectedPatMuonsPFlow',       ''),
+    photons         =  cms.InputTag  ('selectedPatPhotons',          ''),
+    primaryvertexs  =  cms.InputTag  ('offlinePrimaryVertices',      ''),
+    #taus            =  cms.InputTag  ('selectedPatTaus',             ''),
+    triggers        =  cms.InputTag  ('TriggerResults',              '',   'PAT'),
 )
 
 ################################################################################
