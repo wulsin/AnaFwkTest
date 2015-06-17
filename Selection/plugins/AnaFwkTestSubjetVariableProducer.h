@@ -3,6 +3,7 @@
 
 #include "DataFormats/Candidate/interface/Candidate.h"  
 #include "OSUT3Analysis/AnaTools/interface/EventVariableProducer.h"
+#include "DataFormats/PatCandidates/interface/Jet.h"
 
 class AnaFwkTestSubjetVariableProducer : public EventVariableProducer
   {
