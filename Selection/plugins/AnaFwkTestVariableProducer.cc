@@ -8,7 +8,7 @@ AnaFwkTestVariableProducer::~AnaFwkTestVariableProducer() {}
 
 void
 AnaFwkTestVariableProducer::AddVariables (const edm::Event &event) {
-#if DATA_FORMAT == AOD
+#if DATA_FORMAT == MINI_AOD
 
   // Add all of the needed collections to objectsToGet_
   objectsToGet_.insert ("mets");

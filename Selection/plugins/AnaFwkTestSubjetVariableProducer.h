@@ -2,7 +2,6 @@
 #define ANAFWKTEST_SUBJET_VARIABLE_PRODUCER
 
 #include "DataFormats/Candidate/interface/Candidate.h"  
-#include "DataFormats/JetReco/interface/PFJetCollection.h"
 #include "OSUT3Analysis/AnaTools/interface/EventVariableProducer.h"
 
 class AnaFwkTestSubjetVariableProducer : public EventVariableProducer
@@ -15,7 +14,7 @@ class AnaFwkTestSubjetVariableProducer : public EventVariableProducer
 
 	// Functions
 	void AddVariables(const edm::Event &);
-        const reco::PFJet* findSubjet(const edm::Handle<reco::PFJetCollection>&, const reco::PFJet &) const;
+        const pat::Jet &findSubjet(const edm::Handle<vector<pat::Jet> >&, const reco::Candidate &) const;
   };
 
 #endif

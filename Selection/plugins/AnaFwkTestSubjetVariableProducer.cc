@@ -16,7 +16,7 @@ AnaFwkTestSubjetVariableProducer::~AnaFwkTestSubjetVariableProducer() {}
 
 void
 AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
-#if DATA_FORMAT == AOD
+#if DATA_FORMAT == MINI_AOD
 
   // Add all of the needed collections to objectsToGet_
   objectsToGet_.insert ("basicjets");  // these are the "fat jets"
@@ -64,13 +64,13 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
 	  // consider the leading 3 filter jets
           for (int iFilterJet = 2; iFilterJet < min<int> (5, nConstituentsByHandLeading); iFilterJet++)
             {
-              const reco::PFJet &constituent = *((reco::PFJet *) &(*handles_.basicjets->at (0).getJetConstituents ().at (iFilterJet)));
-              const reco::PFJet *correctedConstituent = findSubjet (handles_.jets, constituent);
+              const reco::Candidate &constituent = *handles_.basicjets->at (0).getJetConstituents ().at (iFilterJet);
+              const pat::Jet &correctedConstituent = findSubjet (handles_.jets, constituent);
               TLorentzVector p;
-              p.SetPtEtaPhiE (correctedConstituent->pt (), correctedConstituent->eta (), correctedConstituent->phi (), correctedConstituent->energy ());
+              p.SetPtEtaPhiE (correctedConstituent.pt (), correctedConstituent.eta (), correctedConstituent.phi (), correctedConstituent.energy ());
               fatjetLeading += p;
 
-              chargedMultiplicityLeading += constituent.chargedMultiplicity ();
+              chargedMultiplicityLeading += correctedConstituent.chargedMultiplicity ();
             }
         }
     }
@@ -93,13 +93,13 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
 	  // consider the leading 3 filter jets
           for (int iFilterJet = 2; iFilterJet < min<int> (5, nConstituentsByHandSubleading); iFilterJet++)
             {
-              const reco::PFJet &constituent = *((reco::PFJet *) &(*handles_.basicjets->at (1).getJetConstituents ().at (iFilterJet)));
-              const reco::PFJet *correctedConstituent = findSubjet (handles_.jets, constituent);
+              const reco::Candidate &constituent = *handles_.basicjets->at (1).getJetConstituents ().at (iFilterJet);
+              const pat::Jet &correctedConstituent = findSubjet (handles_.jets, constituent);
               TLorentzVector p;
-              p.SetPtEtaPhiE (correctedConstituent->pt (), correctedConstituent->eta (), correctedConstituent->phi (), correctedConstituent->energy ());
+              p.SetPtEtaPhiE (correctedConstituent.pt (), correctedConstituent.eta (), correctedConstituent.phi (), correctedConstituent.energy ());
               fatjetSubleading += p;
 
-              chargedMultiplicitySubleading += constituent.chargedMultiplicity ();
+              chargedMultiplicitySubleading += correctedConstituent.chargedMultiplicity ();
             }
         }
     }
@@ -142,13 +142,13 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
 // Return the subjet closest to cand. 
 // Follow algorithm used in const pat::Jet* SubjetFilterValidator::findPATJet()
 // in http://cvs.web.cern.ch/cvs/cgi-bin/viewcvs.cgi/UserCode/SchieferD/SubjetFilterValidation/plugins/SubjetFilterValidator.cc?revision=1.3
-const reco::PFJet* AnaFwkTestSubjetVariableProducer::findSubjet(const edm::Handle<reco::PFJetCollection>& subjets, const reco::PFJet &cand) const 
+const pat::Jet &AnaFwkTestSubjetVariableProducer::findSubjet(const edm::Handle<vector<pat::Jet> >& subjets, const reco::Candidate &cand) const 
 {
 
-  const reco::PFJet* result(0);
+  const pat::Jet* result(0);
   double dRMin(1E+10);
 
-  for (reco::PFJetCollection::const_iterator subjet = subjets->begin(); subjet != subjets->end(); ++subjet) { 
+  for (vector<pat::Jet>::const_iterator subjet = subjets->begin(); subjet != subjets->end(); ++subjet) { 
     double dR = reco::deltaR(cand, *subjet);
     if (dR<dRMin) { 
       result = &(*subjet); 
@@ -158,7 +158,7 @@ const reco::PFJet* AnaFwkTestSubjetVariableProducer::findSubjet(const edm::Handl
   if (dRMin>1E-05) cout<< "findSubjet WARNING: dRMin=" << dRMin
                        << " (pT=" << result->pt() << " / " << cand.pt() << ")" << endl;
   
-  return result;
+  return *result;
 
 }
 
