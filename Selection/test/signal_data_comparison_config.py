@@ -38,6 +38,6 @@ input_sources = [
     { 'condor_dir' : 'JUNE18_DibosonComparisonPlots',
       'dataset' : 'histRSGraviton2000',
       'channel' : 'SkimChannel',
-      'legend_entry' : 'RS G #rightarrow ZZ (M = 1 TeV)',
+      'legend_entry' : 'RS G #rightarrow ZZ (M = 2 TeV)',
     },
 ]
