@@ -322,13 +322,13 @@ MyEventVarHistograms = cms.PSet(
         cms.PSet (
             name = cms.string("ptLeading"),
             title = cms.string("p_{T} of leading jet; p_{T} of leading jet [GeV]"), 
-            binsX = cms.untracked.vdouble(100, 0, 500),
+            binsX = cms.untracked.vdouble(100, 0, 2000),
             inputVariables = cms.vstring("ptLeading"),
         ),
         cms.PSet (
             name = cms.string("ptSubleading"),
             title = cms.string("p_{T} of subleading jet; p_{T} of subleading jet [GeV]"), 
-            binsX = cms.untracked.vdouble(100, 0, 500),
+            binsX = cms.untracked.vdouble(100, 0, 2000),
             inputVariables = cms.vstring("ptSubleading"),
         ),
         cms.PSet (
