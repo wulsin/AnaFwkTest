@@ -1,27 +1,19 @@
 import FWCore.ParameterSet.Config as cms
-import os
 
 process = cms.Process("PAT")
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring([
-        # 'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/00474B99-2093-E211-AB43-E0CB4E19F98A.root',
-        # 'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/0068D6F2-3492-E211-84DA-E0CB4E29C4F3.root',
-        # 'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/006D4231-3E93-E211-B1E3-E0CB4E19F9BC.root',
-        # 'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/00753808-8491-E211-B38B-E0CB4E19F973.root',
-        # 'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/00DBAC18-A792-E211-A44E-20CF305616E2.root',
-        # 'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/00F17E49-2592-E211-990F-485B39800BD3.root',
-        # 'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/00F6E17C-0B93-E211-AA25-20CF305B0590.root',
-        # 'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/0265D302-EC92-E211-9089-E0CB4E29C4D7.root',
-        # 'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/0275674D-5293-E211-BABB-485B39800C16.root',
-        # 'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/02BA259B-2B91-E211-9EDC-E0CB4E55363D.root',
-
-    # Signal sample:
-    'root://cmsxrootd.fnal.gov///store/mc/Summer12_DR53X/RSGravitonToZZ_kMpl01_M-2000_TuneZ2star_8TeV-pythia6/AODSIM/PU_S10_START53_V7A-v1/0000/2EF4E83B-37F8-E111-A41C-E41F13181A88.root',
-    'root://cmsxrootd.fnal.gov///store/mc/Summer12_DR53X/RSGravitonToZZ_kMpl01_M-2000_TuneZ2star_8TeV-pythia6/AODSIM/PU_S10_START53_V7A-v1/0000/3A1443B3-39F8-E111-BE04-00215E221680.root',
-    'root://cmsxrootd.fnal.gov///store/mc/Summer12_DR53X/RSGravitonToZZ_kMpl01_M-2000_TuneZ2star_8TeV-pythia6/AODSIM/PU_S10_START53_V7A-v1/0000/72A83B17-3EF8-E111-BA45-00215E93F080.root',
-    'root://cmsxrootd.fnal.gov///store/mc/Summer12_DR53X/RSGravitonToZZ_kMpl01_M-2000_TuneZ2star_8TeV-pythia6/AODSIM/PU_S10_START53_V7A-v1/0000/A891748B-35F8-E111-9E77-00215E93D738.root',
-
+        'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/00474B99-2093-E211-AB43-E0CB4E19F98A.root',
+        'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/0068D6F2-3492-E211-84DA-E0CB4E29C4F3.root',
+        'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/006D4231-3E93-E211-B1E3-E0CB4E19F9BC.root',
+        'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/00753808-8491-E211-B38B-E0CB4E19F973.root',
+        'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/00DBAC18-A792-E211-A44E-20CF305616E2.root',
+        'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/00F17E49-2592-E211-990F-485B39800BD3.root',
+        'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/00F6E17C-0B93-E211-AA25-20CF305B0590.root',
+        'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/0265D302-EC92-E211-9089-E0CB4E29C4D7.root',
+        'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/0275674D-5293-E211-BABB-485B39800C16.root',
+        'root://cmsxrootd.fnal.gov///store/data/Run2012D/JetHT/AOD/22Jan2013-v1/10000/02BA259B-2B91-E211-9EDC-E0CB4E55363D.root',
     ])
 )
 process.TauDecayModeCutMutliplexerPrototype = cms.EDProducer("RecoTauDecayModeCutMultiplexer",
@@ -23919,23 +23911,21 @@ process.out = cms.OutputModule("PoolOutputModule",
     ),
     outputCommands = cms.untracked.vstring('drop *', 
         'keep recoPFCandidates_particleFlow_*_*', 
-        'keep *_selectedPatPhotons*_*_*', 
-        'keep *_selectedPatElectrons*_*_*', 
-        'keep *_selectedPatMuons*_*_*', 
-        'keep *_selectedPatTaus*_*_*', 
+        'keep *_selectedPatPhotonsPFlow_*_*', 
+        'keep *_selectedPatElectronsPFlow_*_*', 
+        'keep *_selectedPatMuonsPFlow_*_*', 
+        'keep *_selectedPatTausPFlow_*_*', 
         'keep *_caSubjetFilterPFJets_*_*', 
-        'keep *_selectedPatJets*_*_*', 
+        'keep *_selectedPatJetsPFlow*_*_*', 
         'keep *_leadingFat*_*_*', 
-        'drop *_selectedPatJets_pfCandidates_*', 
+        'drop *_*_pfCandidates_*', 
         'drop *_*PF_caloTowers_*', 
         'drop *_*JPT_pfCandidates_*', 
         'drop *_*Calo_pfCandidates_*', 
-        'keep *_patMETs*_*_*', 
-        'keep *_selectedPatPFParticles*_*_*', 
-        'keep *_selectedPatTrackCands*_*_*',
+        'keep *_patMETsPFlow_*_*', 
 
-        'keep *_offlineBeamSpot*_*_*',
-        'keep *_offlinePrimaryVertices*_*_*',
+        'keep *_offlineBeamSpot_*_*',
+        'keep *_offlinePrimaryVertices_*_*',
         'keep *_TriggerResults*_*_*',
     )
 )
@@ -27038,7 +27028,7 @@ process.GlobalTag = cms.ESSource("PoolDBESSource",
 
 from CondCore.DBCommon.CondDBSetup_cfi import *
 process.jec = cms.ESSource("PoolDBESSource",CondDBSetup,
-  connect = cms.string('sqlite_file:' + os.environ['CMSSW_BASE'] + '/src/AnaFwkTest/Producers/test/CSA14_V4_DATA.db'),
+  connect = cms.string('sqlite_file:CSA14_V4_DATA.db'),
   toGet =  cms.VPSet(
     cms.PSet(
       record = cms.string("JetCorrectionsRecord"),
@@ -27866,7 +27856,7 @@ process.leadTrackFinding = cms.PSet(
 )
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(10)
+    input = cms.untracked.int32(100)
 )
 
 process.noPrediscriminants = cms.PSet(

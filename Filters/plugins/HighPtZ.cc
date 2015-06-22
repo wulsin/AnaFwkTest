@@ -8,8 +8,6 @@ HighPtZ::HighPtZ (const edm::ParameterSet &cfg) :
 
 HighPtZ::~HighPtZ ()
 {
-  if (zBoson_)
-    delete zBoson_;
 }
 
 bool
