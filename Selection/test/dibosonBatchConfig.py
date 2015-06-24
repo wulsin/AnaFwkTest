@@ -14,13 +14,18 @@ intLumi = 19000
 
 # create list of datasets to process
 datasets = [
+    'JetHTData',  
 #    'JetHt2012BCD_Skim',  
     'RSGravitonZZ2000',  
-    'QCD1800',  
+    # 'QCD1800',  
 ]
 
 InputCondorArguments = {}
 
+
+labels['JetHTData'] = "JetHt 2012"  
+types ['JetHTData'] = "data"  
+colors['JetHTData'] = 1
 
 labels['JetHt2012BCD_Skim'] = "JetHt 2012BCD"  
 types ['JetHt2012BCD_Skim'] = "data"  
