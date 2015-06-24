@@ -386,6 +386,12 @@ MyEventVarHistograms = cms.PSet(
             inputVariables = cms.vstring("invMassLeadingSubleading"),
         ),
         cms.PSet (
+            name = cms.string("invMassLeadingSubleadingATLASBinning"),
+            title = cms.string("invariant mass of leading and subleading jets;m_{jj} [GeV]"), 
+            binsX = cms.untracked.vdouble(35, 50, 3550),
+            inputVariables = cms.vstring("invMassLeadingSubleading"),
+        ),
+        cms.PSet (
             name = cms.string("chargedMultiplicityLeading"),
             title = cms.string("charged multiplicity of jet Leading; charged multiplicity of jet Leading"), 
             binsX = cms.untracked.vdouble(40, 0, 120),
