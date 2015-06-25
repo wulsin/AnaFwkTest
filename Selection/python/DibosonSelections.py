@@ -31,7 +31,7 @@ preselectionChannel = cms.PSet(
 )
 
 ##########################################################################
-#########################  Mass Sideband Channel  ########################
+#########################  ATLAS Mass Sideband Channel  ##################
 ##########################################################################
 
 # preselection + jet masses both between 40 and 60 GeV
@@ -56,6 +56,33 @@ jetSubleadingLowMassCut = cms.PSet (
 
 lowMassChannel.cuts.append(jetLeadingLowMassCut)
 lowMassChannel.cuts.append(jetSubleadingLowMassCut)
+
+##########################################################################
+######################  Extended Mass Sideband Channel  ##################
+##########################################################################
+
+# preselection + jet masses both in range of 40-60 GeV or >120 GeV
+
+extendedMassChannel = cms.PSet(
+    name = cms.string("ExtendedMassChannel"),
+    triggers = jetHtTrigger,
+    cuts = copy.deepcopy(preselection)
+)
+
+jetLeadingMassSideExtCut = cms.PSet (
+    inputCollection = cms.vstring("eventvariables"),
+    cutString = cms.string("fabs ( fatjetMassMax - 50 ) < 10 || fatjetMassMax > 120"),
+    numberRequired = cms.string(">= 1"),
+)
+
+jetSubleadingMassSideExtCut = cms.PSet (
+    inputCollection = cms.vstring("eventvariables"),
+    cutString = cms.string("fabs ( fatjetMassMin - 50 ) < 10 || fatjetMassMax > 120"),
+    numberRequired = cms.string(">= 1"),
+)
+
+extendedMassChannel.cuts.append(jetLeadingMassSideExtCut)
+extendedMassChannel.cuts.append(jetSubleadingMassSideExtCut)
 
 ##########################################################################
 ##############################  WZ Channel  ##############################
