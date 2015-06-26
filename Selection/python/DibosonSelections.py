@@ -77,7 +77,7 @@ jetLeadingMassSideExtCut = cms.PSet (
 
 jetSubleadingMassSideExtCut = cms.PSet (
     inputCollection = cms.vstring("eventvariables"),
-    cutString = cms.string("fabs ( fatjetMassMin - 50 ) < 10 || fatjetMassMax > 120"),
+    cutString = cms.string("fabs ( fatjetMassMin - 50 ) < 10 || fatjetMassMin > 120"),
     numberRequired = cms.string(">= 1"),
 )
 
