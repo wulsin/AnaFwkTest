@@ -10,18 +10,19 @@
 
 
 AnaFwkTestSubjetVariableProducer::AnaFwkTestSubjetVariableProducer(const edm::ParameterSet &cfg) :
-  EventVariableProducer(cfg) {}
+  EventVariableProducer(cfg)
+{
+  // Add all of the needed collections to objectsToGet_
+  objectsToGet_.insert ("basicjets");  // these are the "fat jets"
+  objectsToGet_.insert ("jets");       // these are the subjets  
+  objectsToGet_.insert ("mets");     
+}
 
 AnaFwkTestSubjetVariableProducer::~AnaFwkTestSubjetVariableProducer() {}
 
 void
 AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
 #if DATA_FORMAT == MINI_AOD
-
-  // Add all of the needed collections to objectsToGet_
-  objectsToGet_.insert ("basicjets");  // these are the "fat jets"
-  objectsToGet_.insert ("jets");       // these are the subjets  
-  objectsToGet_.insert ("mets");     
 
   // get all the needed collections from the event and put them into the "handles_" collection
   anatools::getRequiredCollections (objectsToGet_, collections_, handles_, event);
@@ -53,10 +54,10 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
       if (handles_.basicjets->at (0).nConstituents () > 1)
         {
           pair<TLorentzVector, TLorentzVector> subjetMomenta;
-          const reco::Candidate &subjet0 = *handles_.basicjets->at (0).getJetConstituents ().at (0);
-          const reco::Candidate &subjet1 = *handles_.basicjets->at (0).getJetConstituents ().at (1);
-          subjetMomenta.first.SetPtEtaPhiE (subjet0.pt (), subjet0.eta (), subjet0.phi (), subjet0.energy ());
-          subjetMomenta.second.SetPtEtaPhiE (subjet1.pt (), subjet1.eta (), subjet1.phi (), subjet1.energy ());
+          const edm::Ptr<reco::Candidate> subjet0 = handles_.basicjets->at (0).getJetConstituents ().at (0);
+          const edm::Ptr<reco::Candidate> subjet1 = handles_.basicjets->at (0).getJetConstituents ().at (1);
+          subjetMomenta.first.SetPtEtaPhiE (subjet0->pt (), subjet0->eta (), subjet0->phi (), subjet0->energy ());
+          subjetMomenta.second.SetPtEtaPhiE (subjet1->pt (), subjet1->eta (), subjet1->phi (), subjet1->energy ());
           sqrtY0 = min<double> (subjetMomenta.first.Pt (), subjetMomenta.second.Pt ()) * (subjetMomenta.first.DeltaR (subjetMomenta.second) / (subjetMomenta.first + subjetMomenta.second).M ());
 
           fatjetLeading.SetPtEtaPhiE (0.0, 0.0, 0.0, 0.0);
@@ -64,13 +65,13 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
 	  // consider the leading 3 filter jets
           for (int iFilterJet = 2; iFilterJet < min<int> (5, nConstituentsByHandLeading); iFilterJet++)
             {
-              const reco::Candidate &constituent = *handles_.basicjets->at (0).getJetConstituents ().at (iFilterJet);
-              const pat::Jet &correctedConstituent = findSubjet (handles_.jets, constituent);
+              const edm::Ptr<reco::Candidate> constituent = handles_.basicjets->at (0).getJetConstituents ().at (iFilterJet);
+              const pat::Jet *correctedConstituent = findSubjet (handles_.jets, *constituent);
               TLorentzVector p;
-              p.SetPtEtaPhiE (correctedConstituent.pt (), correctedConstituent.eta (), correctedConstituent.phi (), correctedConstituent.energy ());
+              p.SetPtEtaPhiE (correctedConstituent->pt (), correctedConstituent->eta (), correctedConstituent->phi (), correctedConstituent->energy ());
               fatjetLeading += p;
 
-              chargedMultiplicityLeading += correctedConstituent.chargedMultiplicity ();
+              chargedMultiplicityLeading += correctedConstituent->chargedMultiplicity ();
             }
         }
     }
@@ -82,10 +83,10 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
       if (handles_.basicjets->at (1).nConstituents () > 1)
         {
           pair<TLorentzVector, TLorentzVector> subjetMomenta;
-          const reco::Candidate &subjet0 = *handles_.basicjets->at (1).getJetConstituents ().at (0);
-          const reco::Candidate &subjet1 = *handles_.basicjets->at (1).getJetConstituents ().at (1);
-          subjetMomenta.first.SetPtEtaPhiE (subjet0.pt (), subjet0.eta (), subjet0.phi (), subjet0.energy ());
-          subjetMomenta.second.SetPtEtaPhiE (subjet1.pt (), subjet1.eta (), subjet1.phi (), subjet1.energy ());
+          const edm::Ptr<reco::Candidate> subjet0 = handles_.basicjets->at (1).getJetConstituents ().at (0);
+          const edm::Ptr<reco::Candidate> subjet1 = handles_.basicjets->at (1).getJetConstituents ().at (1);
+          subjetMomenta.first.SetPtEtaPhiE (subjet0->pt (), subjet0->eta (), subjet0->phi (), subjet0->energy ());
+          subjetMomenta.second.SetPtEtaPhiE (subjet1->pt (), subjet1->eta (), subjet1->phi (), subjet1->energy ());
           sqrtY1 = min<double> (subjetMomenta.first.Pt (), subjetMomenta.second.Pt ()) * (subjetMomenta.first.DeltaR (subjetMomenta.second) / (subjetMomenta.first + subjetMomenta.second).M ());
 
           fatjetSubleading.SetPtEtaPhiE (0.0, 0.0, 0.0, 0.0);
@@ -93,13 +94,13 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
 	  // consider the leading 3 filter jets
           for (int iFilterJet = 2; iFilterJet < min<int> (5, nConstituentsByHandSubleading); iFilterJet++)
             {
-              const reco::Candidate &constituent = *handles_.basicjets->at (1).getJetConstituents ().at (iFilterJet);
-              const pat::Jet &correctedConstituent = findSubjet (handles_.jets, constituent);
+              const edm::Ptr<reco::Candidate> constituent = handles_.basicjets->at (1).getJetConstituents ().at (iFilterJet);
+              const pat::Jet *correctedConstituent = findSubjet (handles_.jets, *constituent);
               TLorentzVector p;
-              p.SetPtEtaPhiE (correctedConstituent.pt (), correctedConstituent.eta (), correctedConstituent.phi (), correctedConstituent.energy ());
+              p.SetPtEtaPhiE (correctedConstituent->pt (), correctedConstituent->eta (), correctedConstituent->phi (), correctedConstituent->energy ());
               fatjetSubleading += p;
 
-              chargedMultiplicitySubleading += correctedConstituent.chargedMultiplicity ();
+              chargedMultiplicitySubleading += correctedConstituent->chargedMultiplicity ();
             }
         }
     }
@@ -142,7 +143,7 @@ AnaFwkTestSubjetVariableProducer::AddVariables (const edm::Event &event) {
 // Return the subjet closest to cand. 
 // Follow algorithm used in const pat::Jet* SubjetFilterValidator::findPATJet()
 // in http://cvs.web.cern.ch/cvs/cgi-bin/viewcvs.cgi/UserCode/SchieferD/SubjetFilterValidation/plugins/SubjetFilterValidator.cc?revision=1.3
-const pat::Jet &AnaFwkTestSubjetVariableProducer::findSubjet(const edm::Handle<vector<pat::Jet> >& subjets, const reco::Candidate &cand) const 
+const pat::Jet *AnaFwkTestSubjetVariableProducer::findSubjet(const edm::Handle<vector<pat::Jet> >& subjets, const reco::Candidate &cand) const 
 {
 
   const pat::Jet* result(0);
@@ -158,7 +159,7 @@ const pat::Jet &AnaFwkTestSubjetVariableProducer::findSubjet(const edm::Handle<v
   if (dRMin>1E-05) cout<< "findSubjet WARNING: dRMin=" << dRMin
                        << " (pT=" << result->pt() << " / " << cand.pt() << ")" << endl;
   
-  return *result;
+  return result;
 
 }
 

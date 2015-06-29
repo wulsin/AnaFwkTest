@@ -14,7 +14,7 @@ class AnaFwkTestSubjetVariableProducer : public EventVariableProducer
 
 	// Functions
 	void AddVariables(const edm::Event &);
-        const pat::Jet &findSubjet(const edm::Handle<vector<pat::Jet> >&, const reco::Candidate &) const;
+        const pat::Jet *findSubjet(const edm::Handle<vector<pat::Jet> >&, const reco::Candidate &) const;
   };
 
 #endif
